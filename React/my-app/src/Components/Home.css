@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -89,7 +89,7 @@
   }
   
   /* Enhanced Password Field Styling */
-  .password-field {
+  /* .password-field {
     position: relative;
   }
   
@@ -206,4 +206,4 @@
       padding: 30px 20px;
     }
   }
-  
+   */ 

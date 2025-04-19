@@ -3,7 +3,7 @@ import './Home.css';
 import axios from 'axios';
 
 const Home = () => {
-  const [password, setPassword] = useState('');
+ 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   // Password strength logic
@@ -16,28 +16,40 @@ const Home = () => {
     if (/[^A-Za-z0-9]/.test(password)) strength += 20;
     return strength;
   };
-
+  const [password, setPassword] = useState('');
   const passwordStrength = getPasswordStrength(password);
   
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+  const [email, setEmail] = useState('');
+ 
 
-  const handleCalculate = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:8080/calculate', {
-        a: parseInt(num1),
-        b: parseInt(num2),
-      });
-      setResult(response.data.result); // עדכון התוצאה
+        const response = await axios.post('http://localhost:8080/Administators/loginAdministrator', {
+            email,
+            password,
+        });
+
+        console.log('Login successful!', response.data.token);
+        // כאן תוכל לשמור את הטוקן או לעבור לדף אחר
     } catch (error) {
-      console.error('Error calculating sum:', error);
+        if (error.response) {
+            console.error('Login failed:', error.response.data);
+        } else {
+            console.error('Error during login:', error.message);
+        }
     }
-  };
+};
+
+ 
 
   return (
     <div className="login-container">
-      <img src="/api/placeholder/80/80" alt="Profile" className="profile-image" />
+      {/* <img src="/api/placeholder/80/80" alt="Profile" className="profile-image" /> */}
       <h1>Welcome, User!</h1>
       <p className="subtitle">Sign in to continue</p>
 
@@ -85,7 +97,7 @@ const Home = () => {
         </div>
 
  
-        <button type="submit" className="sign-in-button">Sign In</button>
+        <button type="submit" className="sign-in-button" onClick={handleLogin}>Sign In</button>
       </form>
     </div>
   );
