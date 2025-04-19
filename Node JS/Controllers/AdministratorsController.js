@@ -3,7 +3,7 @@ const Members=require("../Moduls/MembersModule")
 const securityCameras=require("../Moduls/SecurityCamerasModule")
 const jwt = require("jsonwebtoken");
 
-//מתפללת בינתיים להצלחתך :/)  אוהבת תתתתת//יצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
+//מיצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
 async function createAdministrator(req, res) {
     try {
         let newAdmin = new Administators(req.body); // יצירת אובייקט חדש
@@ -17,7 +17,8 @@ async function createAdministrator(req, res) {
         // שליחת תשובה עם הטוקן
         res.status(201).send({
             message: "Administrator created successfully!",
-            token: token
+            token: token,
+            name: newAdmin.name,
         });
     } catch (error) {
         console.error("Error creating administrator:", error);

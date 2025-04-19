@@ -10,9 +10,9 @@ const AdministartorsModule = mongoose.Schema({
     arrSecurityCameras:[{type:mongoose.Schema.Types.ObjectId, ref:'SecurityCameras'}],
     arrAnalysisSchema: [{
         date: { type: Date, default: Date.now },
-        sortAnalysis: { type: String, required: true },
+        sortAnalysis: { type: String },
         numberSecurityCamera: {type:mongoose.Schema.Types.ObjectId, ref:'SecurityCameras'},
-        IdSecurityCamera :{type:Number, required: true}
+        IdSecurityCamera :{type:Number}
     }]
 })
 
