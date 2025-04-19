@@ -15,6 +15,7 @@ const PersonalInfo = ({ formData, handleChange }) => (
             <label>Phone:</label>
             <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
         </div>
+        
     </div>
 );
 

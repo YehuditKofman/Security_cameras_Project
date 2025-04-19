@@ -85,7 +85,7 @@ const SighInAdministrator = () => {
 
     const renderConfirmation = () => (
         <div>
-            <h2> </h2>
+         
 
             <div>
                 <label>
@@ -118,6 +118,7 @@ const SighInAdministrator = () => {
             >
                 Create Administrator
             </button>
+            <CreateAdministrator/>
            
         </div>
     );
@@ -155,7 +156,7 @@ const SighInAdministrator = () => {
                 </div>
               
             </form>
-         <CreateAdministrator/>
+        
         </div>
 
     );

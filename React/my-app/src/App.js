@@ -11,8 +11,9 @@ function App() {
   return (
   
      <>
-     <Try/>
-    </> 
+    
+    <SighInAdministrator/> 
+     </>
   );
 }
 
