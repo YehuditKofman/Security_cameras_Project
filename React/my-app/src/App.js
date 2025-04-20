@@ -6,6 +6,7 @@ import CreateAdministrator from './Components/CreateAdministrator';
 import SighInAdministrator from './Components/SighInAdministrator';
 import Try from './Components/Try'; 
 import CreatNewMember from './Components/AddMembers/CreatNewMember';
+import GetAllmembersName from './Components/GetAllMembersName/GetAllmembersName';
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
      <>
 
     
-    <CreatNewMember/> 
+    <GetAllmembersName/> 
      </>
 
   );
