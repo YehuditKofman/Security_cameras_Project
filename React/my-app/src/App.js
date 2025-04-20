@@ -11,9 +11,11 @@ function App() {
   return (
   
      <>
+
     
     <SighInAdministrator/> 
      </>
+
   );
 }
 

@@ -14,19 +14,19 @@ import Verification from './Verification';
 const SighInAdministrator = () => {
 
     const Administrator = useSelector(a => a.AdministratorSlice);
-    console.log(Administrator); 
+    console.log(Administrator);
     const dispatch = useDispatch();
     const [activeIndex, setActiveIndex] = useState(0);
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false);//מצב הכפתור "הבא" 
     const [formData, setFormData] = useState({
         name: "",
-        email:  "",
-        phone:  "",
+        email: "",
+        phone: "",
         password: "",
-        role: "Administrator",  
+        role: "Administrator",
         // creditCard: '',
         arrMembers: []
-       
+
     });
 
     const items = [
@@ -42,12 +42,12 @@ const SighInAdministrator = () => {
             ...prevState,
             [name]: value, // עדכון השדה לפי שם השדה והערך החדש
         }));
-   
+
     };
 
     const handleNext = () => {
         let isValid = true;
-    
+
         switch (activeIndex) {
             case 0: // Personal details
                 isValid = formData.name && formData.email && formData.phone; // בדוק אם כל השדות מולאו
@@ -61,7 +61,7 @@ const SighInAdministrator = () => {
             default:
                 break;
         }
-    
+
         if (isValid) {
             setActiveIndex(activeIndex + 1);
         } else {
@@ -75,7 +75,7 @@ const SighInAdministrator = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
     };
     const addMembers = () => (
         <div>
@@ -85,7 +85,7 @@ const SighInAdministrator = () => {
 
     const renderConfirmation = () => (
         <div>
-         
+
 
             <div>
                 <label>
@@ -102,7 +102,7 @@ const SighInAdministrator = () => {
             <button
                 type="button"
                 onClick={() => {
-                    console.log("fromData"+formData); // הדפס את המידע שנשלח
+                    console.log("fromData" + formData); // הדפס את המידע שנשלח
 
                     dispatch(Create_Administrator({
                         name: formData.name,
@@ -118,8 +118,11 @@ const SighInAdministrator = () => {
             >
                 Create Administrator
             </button>
-            <CreateAdministrator/>
-           
+
+            <CreateAdministrator />
+
+
+
         </div>
     );
 
@@ -154,9 +157,8 @@ const SighInAdministrator = () => {
                         <Button type="submit" label="שלח" icon="pi pi-check" />
                     )}
                 </div>
-              
+
             </form>
-        
         </div>
 
     );
