@@ -9,7 +9,7 @@ const AxiosCreteMemberByAdministrator = ({ ID, memberData }) => {
 
                 const preparedData = {
                     name: Name,
-                    phone: `+${memberData.prefix}${phone}`,
+                    phone: `+${memberData.pre}${phone}`,
                     password,
                     email,
                     AccessPermissions: AccessPermissions.map(permission => ({
