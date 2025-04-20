@@ -116,17 +116,24 @@ async function getAllMembersNamesByAdministrator(req, res) {
 async function createMemberByAdministrator(req, res) {
     try {
             // verifyToken יוודא שהטוקן תקין לפני שנגיע לשלב הזה
-            const decoded = jwt.verify(token, process.env.SECRET);  // מחלצים את המידע מהטוקן
+            //const decoded = jwt.verify(token, process.env.SECRET);  // מחלצים את המידע מהטוקן
     
             // בדיקה אם מדובר במנהל על פי תפקיד
-            if (decoded.role !== "admin") {
-                return res.status(403).send("Access denied. You must be an administrator.");
-            }
+            // if (decoded.role !== "admin") {
+            //     return res.status(403).send("Access denied. You must be an administrator.");
+            // }
     
             // עכשיו אנחנו יודעים שזה מנהל, נוכל להוסיף את העובד
             const { id } = req.params; // מזהה המנהל שנשלח בפרמטר
             const newMember = new Members({ ...req.body, administartorID: id }); // יצירת אובייקט עובד חדש
             await newMember.save(); // שמירת העובד במסד הנתונים
+
+            // עדכון מערך arrMembers של המנהל
+            const updatedAdmin = await Administators.findByIdAndUpdate(
+                id,
+                { $push: { arrMembers: newMember._id } }, // הוספת מזהה העובד למערך
+                { new: true } // החזרת המסמך המעודכן
+            );
     
             res.status(201).send("Member created successfully!");
         } catch (error) {

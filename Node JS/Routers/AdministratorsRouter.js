@@ -9,7 +9,7 @@ const {createAdministrator,updateAdministrator,getAdministratorById,
 
 router.post("/createAdministrator",createAdministrator)
 router.post("/updateAdministrator/:id",updateAdministrator)
-router.post("/createMemberByAdministrator/:id",verifyToken, createMemberByAdministrator)
+router.post("/createMemberByAdministrator/:id", createMemberByAdministrator)
 router.post("/createSecurityCamerasByAdministrator/:id", createSecurityCamerasByAdministrator);
 
 router.get("/loginAdministrator",loginAdministrator)

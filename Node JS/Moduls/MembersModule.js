@@ -6,7 +6,7 @@ const Membersmodule = mongoose.Schema({
     email: { type: String, required: true },
     phone: { type: String, required: true },
     role: { type: String, default: "Member" },
-    administrator:{type:String, required:true},
+    administrator:{type:String},
     administartorID:{ type:mongoose.Schema.Types.ObjectId, ref:'Administrators', required: true },
     AccessPermissions:[{
      sortPermissions:{type:String, required:true},
