@@ -5,6 +5,7 @@ import CreateAdministrator from './Components/CreateAdministrator';
 
 import SighInAdministrator from './Components/SighInAdministrator';
 import Try from './Components/Try'; 
+import CreatNewMember from './Components/AddMembers/CreatNewMember';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
      <>
 
     
-    <SighInAdministrator/> 
+    <CreatNewMember/> 
      </>
 
   );

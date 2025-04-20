@@ -25,6 +25,7 @@ const AdministratorSlice= createSlice({
             state.arrSecurityCameras= action.payload.arrSecurityCameras
             state.arrAnalysisSchema= action.payload.arrAnalysisSchema
         }
+        
     }
 })
 export const {Create_Administrator} = AdministratorSlice.actions
