@@ -81,7 +81,7 @@ const CreatNewMember = () => {
             }}
                         onValuesChange={(changedValues, allValues) => {
                 setFormData(allValues);
-                console.log(allValues); // כאן תראי תמיד את המצב המעודכן
+                console.log(allValues);  
             }}
         >
             <Form.Item label="Full Name" name="Name" rules={[{ required: true, message: 'Please input firstName and lastName!' }]}>
