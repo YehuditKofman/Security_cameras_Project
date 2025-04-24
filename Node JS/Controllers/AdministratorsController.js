@@ -68,7 +68,6 @@ async function updateAdministrator(req, res) {
         res.status(500).send("Failed to update administrator.");
     }   
 }
-
 //קבלת מנהל לפי מזהה
 async function getAdministratorById(req, res) {
     try {
@@ -98,7 +97,6 @@ async function getAllMembersByAdministrator(req, res) {
         res.status(500).send("Failed to fetch members.");
     }
 }
-
 //קבלת כל השמות של העובדים של מנהל זה
 async function getAllMembersNamesByAdministrator(req, res) {
     try {
