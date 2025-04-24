@@ -1,6 +1,8 @@
 const Administators=require("../Moduls/AdministatorsModule")
 const Members=require("../Moduls/MembersModule")
-const securityCameras=require("../Moduls/SecurityCamerasModule")
+const SecurityCameras = require("../Moduls/SecurityCamerasModule");
+
+
 const jwt = require("jsonwebtoken");
 
 //מיצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
@@ -145,16 +147,24 @@ async function createMemberByAdministrator(req, res) {
 //הוספת מצלמת אבטחה חדשה למנהל זה
 async function createSecurityCamerasByAdministrator(req, res) {
     try {
-        const { id } = req.params; // קבלת מזהה המנהל מהפרמטרים של הבקשה
-        // יצירת אובייקט חדש של מצלמת אבטחה עם מזהה המנהל
-        const newSecurityCamera = new securityCameras({ ...req.body, administartorID: id });
-        await newSecurityCamera.save(); // שמירת מצלמת האבטחה במסד הנתונים
+        const { id } = req.params;
+        if (!req.file) {
+            return res.status(400).send("No video file uploaded.");
+        }
 
-        // עדכון מערך arrSecurityCameras של המנהל
+        // יצירת אובייקט חדש עם מיקום הקובץ
+        const newSecurityCamera = new SecurityCameras({
+            IDsecurityCamera: Math.floor(Math.random() * 1000000), // מזהה רנדומלי לדוגמה
+            length: req.body.length, // אפשר לשלוח אורך או להשאיר ריק
+            filePath: req.file.path, // כאן נשמור את הנתיב של הסרטה
+        });
+
+        await newSecurityCamera.save();
+
         const updatedAdmin = await Administators.findByIdAndUpdate(
             id,
-            { $push: { arrSecurityCameras: newSecurityCamera._id } }, // הוספת מזהה מצלמת האבטחה למערך
-            { new: true } // החזרת המסמך המעודכן
+            { $push: { arrSecurityCameras: newSecurityCamera._id } },
+            { new: true }
         );
 
         if (!updatedAdmin) {
@@ -167,6 +177,8 @@ async function createSecurityCamerasByAdministrator(req, res) {
         res.status(500).send("Failed to create security camera.");
     }
 }
+
+
 
 // ייצוא הפונקציות שנוצרו
 module.exports = { 
