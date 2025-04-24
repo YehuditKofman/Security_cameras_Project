@@ -8,7 +8,6 @@ app.use(express.json()); // חובה כדי לפרסר JSON
 app.use(cors());
 
 
-const { createToken, verifyToken } = require("./Middleware/auth"); 
 
 const DBpass = process.env.MONGO_PASS;
 mongoose.connect(DBpass)
