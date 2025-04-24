@@ -8,15 +8,22 @@ const jwt = require("jsonwebtoken");
 //מיצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
 async function createAdministrator(req, res) {
     try {
-        let newAdmin = new Administators(req.body); // יצירת אובייקט חדש
-        await newAdmin.save(); // שמירת האובייקט במסד הנתונים
+        const { email, phone, password, name } = req.body;
 
-        // יצירת טוקן לאחר יצירת המנהל
+        // בדיקה אם כל השדות החובה קיימים
+        if (!email || !phone || !password || !name) {
+            return res.status(400).send("Missing required fields: email, phone, password, or name.");
+        }
+
+        let newAdmin = new Administators(req.body);
+        await newAdmin.save();
+
         const token = jwt.sign(
             { id: newAdmin._id, role: "Administrator" },
-            process.env.SECRET
+            process.env.SECRET,
+            { expiresIn: "2h" }
         );
-        // שליחת תשובה עם הטוקן
+
         res.status(201).send({
             message: "Administrator created successfully!",
             token: token,
@@ -51,8 +58,8 @@ async function loginAdministrator(req, res) {
     } catch (error) {
         console.error("Error logging in administrator:", error);
         res.status(500).send("Failed to log in administrator.");
-    }
-}                                      
+    }                                      
+}
 
 //עדכון מנהל מצלמות אבטחה קיים
 async function updateAdministrator(req, res) {

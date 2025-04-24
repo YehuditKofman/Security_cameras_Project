@@ -15,6 +15,13 @@ const CreateAdministrator = () => {
 
             console.log('Administrator created successfully!', response.data.token);
             alert('Administrator created successfully!');
+            if (response.data.token) {
+                localStorage.setItem("token", response.data.token);
+            } else {
+                console.error('Token is missing in the server response.');
+                alert('Failed to retrieve token from server.');
+            }
+    
         } catch (error) {
             if (error.response) {
                 console.error('Failed to create administrator:', error.response.data);
@@ -30,6 +37,7 @@ const CreateAdministrator = () => {
         <div>
             <h2>Create Administrator</h2>
             <button onClick={handleCreateAdmin}>Send</button>
+
         </div>
     );
 };

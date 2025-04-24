@@ -14,11 +14,8 @@ function App() {
   return (
   
      <>
-
-    
-
-     <UploadVideo/> 
-
+     <SighInAdministrator/>
+     <GetAllmembersName/> 
      </>
 
   );
