@@ -12,12 +12,12 @@ import {
     Mentions,
     Segmented,
     TreeSelect,
-} from 'antd';      
-import AxiosCreteMemberByAdministrator from './AxiosCreateMemberByAdministrator';   
+} from 'antd';
+import AxiosCreteMemberByAdministrator from './AxiosCreateMemberByAdministrator';
 
 const CreatNewMember = () => {
 
-    const[flag, setFlag] = useState(false);
+    const [flag, setFlag] = useState(false);
     const [formData, setFormData] = useState({
         Name: "",
         email: "",
@@ -79,12 +79,12 @@ const CreatNewMember = () => {
                 prefix: '972',
                 arrPermition: [],
             }}
-                        onValuesChange={(changedValues, allValues) => {
+            onValuesChange={(changedValues, allValues) => {
                 setFormData(allValues);
-                console.log(allValues);  
+                console.log(allValues);
             }}
         >
-            <Form.Item label="Full Name" name="Name" rules={[{ required: true, message: 'Please input firstName and lastName!' }]}>
+            <Form.Item label="Full Name" name="Name" rules={[{required: true, message: 'Please input firstName and lastName!' }]}>
                 <Input />
             </Form.Item>
 
@@ -153,18 +153,18 @@ const CreatNewMember = () => {
                 name="AccessPermissions"
                 label="Select Access"
             >
-                        <Select
-                            mode="multiple"
-                            placeholder="Select Access"
-                            variant="underlined"
-                            style={{ flex: 1 }}
-                            options={[
-                                { value: 'jack', label: 'Jack' },
-                                { value: 'lucy', label: 'Lucy' },
-                                { value: 'Yiminghe', label: 'Yiminghe' },
-                            ]}
-                        />
-                
+                <Select
+                    mode="multiple"
+                    placeholder="Select Access"
+                    variant="underlined"
+                    style={{ flex: 1 }}
+                    options={[
+                        { value: 'jack', label: 'Jack' },
+                        { value: 'lucy', label: 'Lucy' },
+                        { value: 'Yiminghe', label: 'Yiminghe' },
+                    ]}
+                />
+
             </Form.Item>
 
 
@@ -173,7 +173,7 @@ const CreatNewMember = () => {
                 <Button type="primary" htmlType="submit" onClick={() => { setFlag(true); }}>
                     Create New Member
                 </Button>
-               
+
             </Form.Item>
             {flag && <AxiosCreteMemberByAdministrator ID={ID} memberData={formData} />}
 

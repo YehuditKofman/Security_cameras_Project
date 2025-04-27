@@ -8,6 +8,7 @@ const AxiosCreteMemberByAdministrator = ({ ID, memberData }) => {
                 const { Name, phone, password, email, AccessPermissions  } = memberData;
 
                 const preparedData = {
+                    
                     name: Name,
                     phone: `+${memberData.pre}${phone}`,
                     password,

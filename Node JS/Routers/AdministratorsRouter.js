@@ -13,8 +13,7 @@ router.post("/createAdministrator",createAdministrator)
 router.post("/updateAdministrator/:id",updateAdministrator)
 router.post("/createMemberByAdministrator/:id", createMemberByAdministrator)
 router.post("/createSecurityCamerasByAdministrator/:id", upload.single('video'), createSecurityCamerasByAdministrator);
-
-router.get("/loginAdministrator",loginAdministrator)
+router.post("/loginAdministrator",loginAdministrator)
 
 router.get("/getAdministratorById/:id",getAdministratorById)
 router.get("/getAllMembersByAdministrator/:id",getAllMembersByAdministrator)

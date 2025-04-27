@@ -7,6 +7,8 @@ import Try from './Components/Try';
 import CreatNewMember from './Components/AddMembers/CreatNewMember';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
 import GetAllmembersName from './Components/GetAllMembersName/GetAllmembersName';
+import  Login from './Components/Login/Login';  
+import Table from './Components/Table';
 
 
 
@@ -14,11 +16,7 @@ function App() {
   return (
   
      <>
-
-    
-
-     <UploadVideo/> 
-
+     <Table/> 
      </>
 
   );
