@@ -5,6 +5,7 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
+import { ProductService } from './ProductService';
 import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -18,16 +19,17 @@ import { Tag } from 'primereact/tag';
 
  const Table=()=> {
     let emptyProduct = {
-        id: null,
-        name: '',
-        image: null,
-        description: '',
-        category: null,
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
+        AccessPermissions: [],
+        administartorID: '',
+        arrAnalysisSchema: [],
+        arrSecurityCameras: [],
+        email: null,
+        name: 456451456,
+        password: null,
+        phone: null,
+        role: 'Member'
     };
+    
 
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
@@ -41,10 +43,11 @@ import { Tag } from 'primereact/tag';
     const dt = useRef(null);
 
     
-    // useEffect(() => {
-    //     ProductService.getProducts().then((data) => setProducts(data));
-    // }, []);
+    useEffect(() => {
+        ProductService.getProducts().then((data) => setProducts(data));
+    }, []);
 
+  
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
@@ -53,6 +56,7 @@ import { Tag } from 'primereact/tag';
         setProduct(emptyProduct);
         setSubmitted(false);
         setProductDialog(true);
+        console.log('openNew', product);
     };
 
     const hideDialog = () => {
@@ -196,7 +200,7 @@ import { Tag } from 'primereact/tag';
     };
 
     const priceBodyTemplate = (rowData) => {
-        return formatCurrency(rowData.price);
+        return formatCurrency(rowData.name);
     };
 
     const ratingBodyTemplate = (rowData) => {
@@ -271,13 +275,16 @@ import { Tag } from 'primereact/tag';
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
                     <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="code" header="Code" sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column field="password" header="Password" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="image" header="Image" body={imageBodyTemplate}></Column>
-                    <Column field="adminostrator" header="Adminostrator" sortable style={{ minWidth: '10rem' }}></Column>
-                   
+                    {/* <Column field="image" header="Image" body={imageBodyTemplate}></Column> */}
+                    <Column field="email" header="Email" sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column field="administartorID" header="administartorID" sortable style={{ minWidth: '12rem' }}></Column>
+                  
+
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
+
             </div>
 
             <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
@@ -351,7 +358,10 @@ import { Tag } from 'primereact/tag';
                     {product && <span>Are you sure you want to delete the selected products?</span>}
                 </div>
             </Dialog>
+           
         </div>
+        
+        
     );
 }
 export default Table;
