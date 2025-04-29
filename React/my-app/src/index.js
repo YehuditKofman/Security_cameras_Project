@@ -7,6 +7,8 @@ import MemberSlice, { Create_Member } from './Store/MemberSlice';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'primeflex/primeflex.css';
+
 
 const myStore = configureStore({
   reducer: {
