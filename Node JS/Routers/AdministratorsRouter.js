@@ -19,4 +19,5 @@ router.get("/getAdministratorById/:id",getAdministratorById)
 router.get("/getAllMembersByAdministrator/:id",getAllMembersByAdministrator)
 router.get("/getAllMembersNamesByAdministrator/:id",verifyToken,getAllMembersNamesByAdministrator)
 
+
 module.exports = router
