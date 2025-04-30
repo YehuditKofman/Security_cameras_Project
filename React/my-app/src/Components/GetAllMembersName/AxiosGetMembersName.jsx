@@ -11,11 +11,27 @@ const AxiosGetMembersName = () => {
   useEffect(() => {
     async function fetchMembers() {
       try {
-        const response = await axios.get(`http://localhost:8080/Administators/getAllMembersNamesByAdministrator/${administratorId}`);
-        setMembers(response.data);
+        const token = localStorage.getItem("token"); // אם אתה שומר את הטוקן ב-localStorage
+        if (!token) {
+          setError("Token is missing. Please log in again.");
+          setLoading(false);
+          return;
+      }
+        const response = await axios.get(
+          `http://localhost:8080/Administators/getAllMembersNamesByAdministrator/${administratorId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // הוספת הכותרת Authorization
+            },
+          }
+        );   
+    
+        
+        console.log("Response from server:", response.data);
+       setMembers(response.data);
       } catch (err) {
         setError('Failed to fetch members.');
-        console.error(err);
+        console.error(err);//
       } finally {
         setLoading(false);
       }

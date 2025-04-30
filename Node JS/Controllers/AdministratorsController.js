@@ -7,42 +7,20 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 //מיצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
-// async function createAdministrator(req, res) {
-//     try {
-//         let newAdmin = new Administators(req.body); // יצירת אובייקט חדש
-//         await newAdmin.save(); // שמירת האובייקט במסד הנתונים
 
-//         // יצירת טוקן לאחר יצירת המנהל
-//         const token = jwt.sign(
-//             { id: newAdmin._id, role: "Administrator" },
-//             process.env.SECRET
-//         );
-//         // שליחת תשובה עם הטוקן
-//         res.status(201).send({
-//             message: "Administrator created successfully!",
-//             token: token,
-//             name: newAdmin.name,
-//         });
-//     } catch (error) {
-//         console.error("Error creating administrator:", error);
-//         res.status(500).send("Failed to create administrator.");
-//     }
-// }
 async function createAdministrator(req, res) {
-
     try {
-        // הצפנת הסיסמה
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const { email, phone, password, name } = req.body;
 
-        // יצירת אובייקט חדש עם סיסמה מוצפנת
-        let newAdmin = new Administators({
-            ...req.body,
-            password: hashedPassword
-        });
+        // בדיקה אם כל השדות החובה קיימים
+        if (!email || !phone || !password || !name) {
+            return res.status(400).send("Missing required fields: email, phone, password, or name.");
+        }
 
+        let newAdmin = new Administators(req.body);
         await newAdmin.save();
 
-        // יצירת טוקן
+
         const token = jwt.sign(
             { id: newAdmin._id, role: "Administrator" },
             process.env.SECRET,
@@ -90,26 +68,25 @@ async function loginAdministrator(req, res) {
                 return res.status(401).send("Invalid email or password.");
             }
     
-            // יצירת טוקן
-            const token = jwt.sign(
-                { id: user._id, role: role },
-                process.env.SECRET,
-                { expiresIn: "2h" }
-            );
-    
-            res.status(200).send({
-                message: "Login successful!",
-                token: token,
-                name: user.name,
-                role: role
-            });
-    
-        } catch (error) {
-            console.error("Error logging in:", error);
-            res.status(500).send("Failed to log in.");
-        }
-    
-}                                      
+            
+
+        // יצירת טוקן לאחר התחברות מוצלחת
+        const token = jwt.sign(
+            { id: admin._id, role: "Administrator" },
+            process.env.SECRET
+        );
+
+        res.status(200).send({
+            message: "Login successful!",
+            token: token
+        });
+    } catch (error) {
+        console.error("Error logging in administrator:", error);
+        res.status(500).send("Failed to log in administrator.");
+    } 
+}                                     
+
+
 
 //עדכון מנהל מצלמות אבטחה קיים
 async function updateAdministrator(req, res) {

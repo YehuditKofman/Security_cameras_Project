@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 const app = express(); // אתחול המשתנה app
 app.use(express.json()); // חובה כדי לפרסר JSON
 app.use(cors());
-const { createToken, verifyToken } = require("./Middleware/auth"); 
+
+
 
 
 const DBpass = process.env.MONGO_PASS;
@@ -20,7 +21,7 @@ const Members = require("./Routers/MembersRouter");
 const SecurityCameras = require("./Routers/SecurityCamerasRauter");
 
 
-app.use("/Administators", Administators);
+app.use("/Administators", Administators); 
 app.use("/Members", Members);
 app.use("/SecurityCameras", SecurityCameras);
 

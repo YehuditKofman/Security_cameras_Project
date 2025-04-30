@@ -22,6 +22,7 @@ const LazyHome = React.lazy(() => import('./Components/Home'))
 function App() {
   return (
 
+
     <>
       <BrowserRouter>
       <UploadVideo/>
@@ -34,6 +35,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </>
+
 
   );
 }
