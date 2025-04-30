@@ -4,6 +4,15 @@ import axios from 'axios';
 function UploadVideo() {
     const adminId = '68043ccf8b5cb28fe901eb41' // Assuming you have the adminId stored in localStorage
     const [video, setVideo] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const token = localStorage.getItem("token"); // אם אתה שומר את הטוקן ב-localStorage
+    if (!token) {
+      setError("Token is missing. Please log in again.");
+      setLoading(false);
+      return;
+    }
 
     const handleFileChange = (e) => {
         setVideo(e.target.files[0]);
@@ -28,6 +37,7 @@ function UploadVideo() {
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`, // הוספת הכותרת Authorization
                     },
                 }
             );
