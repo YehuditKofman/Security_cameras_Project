@@ -85,8 +85,6 @@ const SighInAdministrator = () => {
 
     const renderConfirmation = () => (
         <div>
-
-
             <div>
                 <label>
                     <input

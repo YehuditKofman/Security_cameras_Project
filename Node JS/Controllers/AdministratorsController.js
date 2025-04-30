@@ -1,11 +1,13 @@
 const Administators=require("../Moduls/AdministatorsModule")
 const Members=require("../Moduls/MembersModule")
 const SecurityCameras = require("../Moduls/SecurityCamerasModule");
+const bcrypt = require("bcrypt");
 
 
 const jwt = require("jsonwebtoken");
 
 //מיצירת מנהל מצלמות אבטחה חדש//ממש אצילי מצידך.
+
 async function createAdministrator(req, res) {
     try {
         const { email, phone, password, name } = req.body;
@@ -17,6 +19,7 @@ async function createAdministrator(req, res) {
 
         let newAdmin = new Administators(req.body);
         await newAdmin.save();
+
 
         const token = jwt.sign(
             { id: newAdmin._id, role: "Administrator" },
@@ -37,13 +40,35 @@ async function createAdministrator(req, res) {
 
 //login מנהל מצלמות אבטחה קיים
 async function loginAdministrator(req, res) {
-    try {
-        const { name,email ,password } = req.body; // קבלת פרטי ההתחברות מהבקשה
-        const admin = await Administators.findOne({ email }); // חיפוש המנהל לפי אימייל
 
-        if (!admin || !(await admin.comparePassword(password))) { // בדיקת סיסמה
-            return res.status(401).send("Invalid email or password.");
-        }
+        try {
+            const { email, password } = req.body;
+    
+            // ננסה קודם לחפש את המשתמש בטבלת המנהלים
+            let user = await Administators.findOne({ email });
+          
+            let role = "Administrator";
+    
+             if (!user) {
+                // אם לא נמצא - נבדוק בטבלת העובדים
+                user = await Members.findOne({ email });
+                role = "Member";
+             }
+    
+            // אם המשתמש לא נמצא בכלל
+            if (!user) {
+                return res.status(401).send("Invalid email or password jhyuh.");
+            }
+    
+            // השוואת הסיסמה עם bcrypt
+            const isMatch = await bcrypt.compare(password, user.password);
+            console.log(isMatch)
+
+            if (!isMatch) {
+                return res.status(401).send("Invalid email or password.");
+            }
+    
+            
 
         // יצירת טוקן לאחר התחברות מוצלחת
         const token = jwt.sign(
@@ -58,8 +83,10 @@ async function loginAdministrator(req, res) {
     } catch (error) {
         console.error("Error logging in administrator:", error);
         res.status(500).send("Failed to log in administrator.");
-    }                                      
-}
+    } 
+}                                     
+
+
 
 //עדכון מנהל מצלמות אבטחה קיים
 async function updateAdministrator(req, res) {
@@ -122,6 +149,8 @@ async function getAllMembersNamesByAdministrator(req, res) {
 //יצירת עובד חדש למנהל זה
 async function createMemberByAdministrator(req, res) {
     try {
+             const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
             // verifyToken יוודא שהטוקן תקין לפני שנגיע לשלב הזה
             //const decoded = jwt.verify(token, process.env.SECRET);  // מחלצים את המידע מהטוקן
     
@@ -132,8 +161,16 @@ async function createMemberByAdministrator(req, res) {
     
             // עכשיו אנחנו יודעים שזה מנהל, נוכל להוסיף את העובד
             const { id } = req.params; // מזהה המנהל שנשלח בפרמטר
-            const newMember = new Members({ ...req.body, administartorID: id }); // יצירת אובייקט עובד חדש
-            await newMember.save(); // שמירת העובד במסד הנתונים
+            let newMember = new Members({
+                ...req.body,
+                administartorID: id ,
+                password: hashedPassword
+            });
+            console.log(req.body)
+            console.log(id)
+            await newMember.save();
+
+           
 
             // עדכון מערך arrMembers של המנהל
             const updatedAdmin = await Administators.findByIdAndUpdate(
@@ -152,6 +189,7 @@ async function createMemberByAdministrator(req, res) {
 //הוספת מצלמת אבטחה חדשה למנהל זה
 async function createSecurityCamerasByAdministrator(req, res) {
     try {
+
         const { id } = req.params;
         if (!req.file) {
             return res.status(400).send("No video file uploaded.");
