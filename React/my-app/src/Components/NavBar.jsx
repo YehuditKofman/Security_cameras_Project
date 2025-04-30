@@ -1,17 +1,21 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';  
+
 import { Menubar } from "primereact/menubar";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
 import SighInAdministrator from "./SighInAdministrator";
 import Login from "./Login/Login";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
-  const[flag, setFlag] = useState(false);
-  const[flag2, setFlag2] = useState(false);
+
   const items = [
     {
       label: "לוח שנה",
@@ -46,20 +50,21 @@ export default function Navbar() {
 
   const end = (
     <div className="flex align-items-center gap-3">
-      <Button onClick={() => setFlag2(!flag2)}
-        label="Sign In"
+      <Link to="/Login">
+        <Button
+          label="Login"
+          severity="secondary"
+          className="shadow-2 p-button-sm p-button-rounded transition-colors hover:bg-primary hover:text-white"
+        />
+      </Link>
+      <Link to="/Sigh-In">
+        <Button label="Sign In"
         severity="secondary"
-        className="shadow-2 p-button-outlined p-button-sm p-button-rounded transition-colors hover:bg-primary hover:text-white"
-      />
-      <Button onClick={()=>setFlag(!flag)}
-        label="Login"
-        severity="secondary"
-        className="shadow-2 p-button-sm p-button-rounded transition-colors hover:bg-primary hover:text-white"
-      />
-        
+        className="shadow-2 p-button-outlined p-button-sm p-button-rounded transition-colors hover:bg-primary hover:text-white"/>
+     </Link>
+ 
     </div>
   );
-
   return (
     <>
       <Menubar start={start} end={end} className="shadow-2 surface-0 border-none px-3" />
@@ -74,8 +79,7 @@ export default function Navbar() {
           ))}
         </ul>
       </Sidebar>
-      {flag && <Login/>} 
-      {flag2 && <SighInAdministrator/>} 
+
     </>
   );
 }

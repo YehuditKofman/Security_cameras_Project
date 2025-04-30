@@ -8,6 +8,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'primeflex/primeflex.css';
+import { BrowserRouter } from 'react-router-dom';
 
 
 const myStore = configureStore({
@@ -19,9 +20,11 @@ const myStore = configureStore({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={myStore}> 
+<Provider store={myStore}> 
+
       <App/>
-  </Provider>
+ 
+</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
