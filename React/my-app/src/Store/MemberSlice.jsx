@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialValue={
+    _id:"",
     name:"Member",
     email:"",
     phone:"",

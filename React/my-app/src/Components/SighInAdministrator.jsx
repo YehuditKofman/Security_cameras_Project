@@ -19,6 +19,7 @@ const SighInAdministrator = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false);//מצב הכפתור "הבא" 
     const [formData, setFormData] = useState({
+        _id: "",
         name: "",
         email: "",
         phone: "",
@@ -103,6 +104,7 @@ const SighInAdministrator = () => {
                     console.log("fromData" + formData); // הדפס את המידע שנשלח
 
                     dispatch(Create_Administrator({
+                        _id: formData._id,
                         name: formData.name,
                         email: formData.email,
                         phone: formData.phone,

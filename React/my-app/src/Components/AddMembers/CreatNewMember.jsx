@@ -19,6 +19,7 @@ const CreatNewMember = () => {
 
     const [flag, setFlag] = useState(false);
     const [formData, setFormData] = useState({
+        _id: "",
         Name: "",
         email: "",
         phone: "",
@@ -71,6 +72,7 @@ const CreatNewMember = () => {
             variant={variant || 'underlined'}
             style={{ maxWidth: 600 }}
             initialValues={{
+                _id: ID,
                 Name: '',
                 password: '',
                 confirm: '',
@@ -84,6 +86,7 @@ const CreatNewMember = () => {
                 console.log(allValues);
             }}
         >
+            
             <Form.Item label="Full Name" name="Name" rules={[{required: true, message: 'Please input firstName and lastName!' }]}>
                 <Input />
             </Form.Item>
@@ -173,7 +176,7 @@ const CreatNewMember = () => {
                 <Button type="primary" htmlType="submit" onClick={() => { setFlag(true); }}>
                     Create New Member
                 </Button>
-
+                    
             </Form.Item>
             {flag && <AxiosCreteMemberByAdministrator ID={ID} memberData={formData} />}
 

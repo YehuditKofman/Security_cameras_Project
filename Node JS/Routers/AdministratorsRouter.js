@@ -7,7 +7,7 @@ const router = express.Router()
 
 const {createAdministrator,updateAdministrator,getAdministratorById,
     getAllMembersByAdministrator,createMemberByAdministrator,getAllMembersNamesByAdministrator,
-    createSecurityCamerasByAdministrator,loginAdministrator} = require("../Controllers/AdministratorsController")
+    createSecurityCamerasByAdministrator,loginAdministrator,deleteMemberByAdministrator} = require("../Controllers/AdministratorsController")
 
 router.post("/createAdministrator",createAdministrator)
 router.post("/updateAdministrator/:id",updateAdministrator)
@@ -18,5 +18,7 @@ router.post("/loginAdministrator",loginAdministrator)
 router.get("/getAdministratorById/:id",getAdministratorById)
 router.get("/getAllMembersByAdministrator/:id",getAllMembersByAdministrator)
 router.get("/getAllMembersNamesByAdministrator/:id",verifyToken,getAllMembersNamesByAdministrator)
+
+router.delete("/deleteMemberByAdministrator/:id",verifyToken,deleteMemberByAdministrator)
 
 module.exports = router
