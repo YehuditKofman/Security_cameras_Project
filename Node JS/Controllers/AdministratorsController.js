@@ -243,7 +243,6 @@ async function deleteMemberByAdministrator(req, res) {
     }
 }
 
-
 // ייצוא הפונקציות שנוצרו
 module.exports = {
     createAdministrator, updateAdministrator, getAdministratorById, getAllMembersByAdministrator,

@@ -25,7 +25,6 @@ function App() {
 
     <>
       <BrowserRouter>
-      {/* <UploadVideo/> */}
        <SighInAdministrator/>
       <CreatNewMember/> 
         {/* <Suspense fallback={'loading...'}><LazyNavBar /></Suspense> */}
@@ -36,10 +35,8 @@ function App() {
           <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
         </Routes>
       </BrowserRouter>
-      {/* <UploadVideo/> */}
       {/* <GetAllmembersName/> */}
       <Table/>
-      <VideoCard/>
 
     </>
 
