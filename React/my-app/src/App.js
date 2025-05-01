@@ -12,6 +12,13 @@ import GetAllmembersName from './Components/GetAllMembersName/GetAllmembersName'
 import Login from './Components/Login/Login';
 import Table from './Components/Table';
 import Navbar from './Components/NavBar';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';  // theme
+import 'primereact/resources/primereact.min.css';                  // core css
+import 'primeicons/primeicons.css';                                // icons
+import 'primeflex/primeflex.css';    
+
+import VideoPlayer from './Components/GetAllSecurityCameras/GetAllSecurityCamera';
+import VideoCard from './Components/GetSecurity';
 
 
 const LazyNavBar = React.lazy(() => import('./Components/NavBar'))
@@ -24,15 +31,19 @@ function App() {
 
 
     <>
+  <VideoCard/>
       <BrowserRouter>
-      <UploadVideo/>
-        <Suspense fallback={'loading...'}><LazyNavBar /></Suspense>
 
+      {/* <PremiumSecurityCard />
+       
+        <VideoPlayer filename="1746042985280-176516495.mp4"/> 
+        <Suspense fallback={'loading...'}><LazyNavBar /></Suspense>
+          
         <Routes>
           <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
           <Route path="/Sigh-In" element={<Suspense fallback={'loading...'}><LazySighIn /></Suspense>} />
           <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
-        </Routes>
+        </Routes> */}
       </BrowserRouter>
     </>
 

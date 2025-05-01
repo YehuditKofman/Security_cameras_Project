@@ -28,7 +28,9 @@ function UploadVideo() {
 
         const formData = new FormData();
         formData.append('video', video);
-        formData.append('length', 60); // כאן אפשר להוסיף אורך הסרטה ידנית או לחשב
+        formData.append('length',70,);// כאן אפשר להוסיף אורך הסרטה ידנית או לחשב
+        formData.append('administartorID',adminId );// כאן אפשר להוסיף רוחב סרטון ידנית או לחשב
+        console.log("formData", formData);
 
         try {
             const response = await axios.post(

@@ -200,6 +200,7 @@ async function createSecurityCamerasByAdministrator(req, res) {
             IDsecurityCamera: Math.floor(Math.random() * 1000000), // מזהה רנדומלי לדוגמה
             length: req.body.length, // אפשר לשלוח אורך או להשאיר ריק
             filePath: req.file.path, // כאן נשמור את הנתיב של הסרטה
+            administartorID:req.body.administartorID, // מזהה המנהל 
         });
 
         await newSecurityCamera.save();
@@ -220,6 +221,20 @@ async function createSecurityCamerasByAdministrator(req, res) {
         res.status(500).send("Failed to create security camera.");
     }
 }
+//קבלת כל מצלמות האבטחה של מנהל זה
+async function getAllSecurityCamerasByAdministrator(req, res) {
+    try {
+        const { id } = req.params; // קבלת מזהה המנהל מהפרמטרים של הבקשה
+        const cameras = await SecurityCameras.find({ administartorID: id }); // חיפוש כל מצלמות האבטחה של המנהל במסד הנתונים
+        if (!cameras) {
+            return res.status(404).send("No security cameras found for this administrator.");
+        }
+        res.status(200).json(cameras); // החזרת כל מצלמות האבטחה שנמצאו
+    } catch (error) {
+        console.error("Error fetching security cameras:", error);
+        res.status(500).send("Failed to fetch security cameras.");
+    }
+}
 
 
 
@@ -227,4 +242,4 @@ async function createSecurityCamerasByAdministrator(req, res) {
 module.exports = { 
 createAdministrator, updateAdministrator, getAdministratorById, getAllMembersByAdministrator, 
 createMemberByAdministrator, getAllMembersNamesByAdministrator, createSecurityCamerasByAdministrator,
-loginAdministrator };
+loginAdministrator,getAllSecurityCamerasByAdministrator };

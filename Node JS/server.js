@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -20,7 +21,7 @@ const Administators = require("./Routers/AdministratorsRouter");
 const Members = require("./Routers/MembersRouter");
 const SecurityCameras = require("./Routers/SecurityCamerasRauter");
 
-
+app.use('/videos', express.static(path.join(__dirname, 'uploads'))); // הגדרת נתיב לסטטיק של קבצי וידאו
 app.use("/Administators", Administators); 
 app.use("/Members", Members);
 app.use("/SecurityCameras", SecurityCameras);

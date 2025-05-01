@@ -15,7 +15,7 @@ const AdministartorsModule = mongoose.Schema({
         numberSecurityCamera: {type:mongoose.Schema.Types.ObjectId, ref:'SecurityCameras'},
         IdSecurityCamera :{type:Number}
     }]
-})
+}) 
 
 
 
