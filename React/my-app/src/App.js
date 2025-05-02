@@ -1,26 +1,25 @@
-import logo from './logo.svg';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import './App.css';
-import Home from './Components/Home';
-import CreateAdministrator from './Components/CreateAdministrator';
-import SighInAdministrator from './Components/SighInAdministrator';
-import Try from './Components/Try';
-import CreatNewMember from './Components/AddMembers/CreatNewMember';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
 import GetAllmembersName from './Components/GetAllMembersName/GetAllmembersName';
-import Login from './Components/Login/Login';
-import Table from './Components/Table';
-import Navbar from './Components/NavBar';
+
+import Table from './Components/TableMembers/Table';
+import SighInAdministrator from './Components/SighInAdministrator';
+import CreatNewMember from './Components/AddMembers/CreatNewMember';
+
 import 'primereact/resources/themes/lara-light-indigo/theme.css';  // theme
 import 'primereact/resources/primereact.min.css';                  // core css
 import 'primeicons/primeicons.css';                                // icons
 import 'primeflex/primeflex.css';    
 
-import VideoPlayer from './Components/GetAllSecurityCameras/GetAllSecurityCamera';
-import VideoCard from './Components/GetSecurity';
 
 
+import { Video } from 'lucide-react';
+import VideoCard  from './Components/GetSecurity';
+
+
+// import AxiosDeleteMember from './Components/DeleteMember/AxiosDeleteMember';
 const LazyNavBar = React.lazy(() => import('./Components/NavBar'))
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'))
 const LazySighIn = React.lazy(() => import('./Components/SighInAdministrator'))
@@ -31,8 +30,13 @@ function App() {
 
 
     <>
+   
   <VideoCard/>
       <BrowserRouter>
+
+       <SighInAdministrator/>
+      <CreatNewMember/> 
+        {/* <Suspense fallback={'loading...'}><LazyNavBar /></Suspense> */}
 
       {/* <PremiumSecurityCard />
        
@@ -45,6 +49,9 @@ function App() {
           <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
         </Routes> */}
       </BrowserRouter>
+      {/* <GetAllmembersName/> */}
+      <Table/>
+
     </>
 
 

@@ -16,8 +16,8 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
-
- const Table=()=> {
+import AxiosDeleteMember from '../DeleteMember/AxiosDeleteMember';
+const Table = () => {
     let emptyProduct = {
         AccessPermissions: [],
         administartorID: '',
@@ -27,11 +27,12 @@ import { Tag } from 'primereact/tag';
         name: 456451456,
         password: null,
         phone: null,
-        role: 'Member'
+        role: 'Member',
+        _id: '',
     };
-    
 
-    const [products, setProducts] = useState(null);
+
+    const [products, setProducts] = useState();
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -42,12 +43,19 @@ import { Tag } from 'primereact/tag';
     const toast = useRef(null);
     const dt = useRef(null);
 
-    
+
+    // useEffect(() => {
+    //     ProductService.getProducts().then((data) => setProducts(data));
+    // }, []);
     useEffect(() => {
-        ProductService.getProducts().then((data) => setProducts(data));
+        ProductService.getProducts().then((data) => {
+            console.log('products from server:', data);
+            setProducts(data);
+        });
     }, []);
 
-  
+
+
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
@@ -271,16 +279,17 @@ import { Tag } from 'primereact/tag';
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
                     <Column selectionMode="multiple" exportable={false}></Column>
                     <Column field="password" header="Password" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
                     {/* <Column field="image" header="Image" body={imageBodyTemplate}></Column> */}
                     <Column field="email" header="Email" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="administartorID" header="administartorID" sortable style={{ minWidth: '12rem' }}></Column>
-                  
+                    <Column field="_id" header="ID" sortable />
+
 
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
@@ -346,7 +355,12 @@ import { Tag } from 'primereact/tag';
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {product && (
                         <span>
-                            Are you sure you want to delete <b>{product.name}</b>?
+                            Are you sure you want to delete<b>{product.name}
+                                <AxiosDeleteMember
+                                    memberId={product._id}
+                                    adminId={product.administartorID && product.administartorID.toString()}
+                                />
+                            </b>?
                         </span>
                     )}
                 </div>
@@ -358,11 +372,10 @@ import { Tag } from 'primereact/tag';
                     {product && <span>Are you sure you want to delete the selected products?</span>}
                 </div>
             </Dialog>
-           
+
         </div>
-        
-        
+
+
     );
 }
 export default Table;
-        

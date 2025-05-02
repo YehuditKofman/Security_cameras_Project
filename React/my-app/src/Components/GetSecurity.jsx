@@ -9,8 +9,8 @@ const VideoCard = () => {
   const [videoFilename, setVideoFilename] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [playing, setPlaying] = useState(false); // מצב ניגון
-  const videoRef = useRef(null); // הפניה לתגית הווידאו
+  const [playing, setPlaying] = useState(false); 
+  const videoRef = useRef(null); 
   const menu = useRef(null);
 
   useEffect(() => {
@@ -84,6 +84,7 @@ const VideoCard = () => {
   }
 
   return (
+    
     <div className="video-card-container" style={{ maxWidth: '640px', margin: '0 auto' }}>
       <Card 
         style={{ 
@@ -95,6 +96,7 @@ const VideoCard = () => {
         }}
         footer={footer}
       >
+
         {/* Video Player Section */}
         <div 
           className="video-player-container relative" 
@@ -114,7 +116,7 @@ const VideoCard = () => {
                 height="100%" 
                 style={{ borderRadius: '8px', maxHeight: '360px' }}
               >
-                <source src={`http://localhost:8080/videos/1746042985280-176516495.mp4`} type="video/mp4" />
+                <source src={`http://localhost:8080/videos/1746144507142-934242871.mp4`} type="video/mp4" />
                 הדפדפן שלך אינו תומך בניגון וידאו.
               </video>
               <Button 

@@ -16,7 +16,7 @@
     "lucide-react": "^0.503.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
-    "primereact": "^10.9.4",
+    "primereact": "^10.9.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.55.0",
@@ -50,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3"
   }
 }

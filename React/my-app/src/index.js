@@ -10,6 +10,10 @@ import reportWebVitals from './reportWebVitals';
 import 'primeflex/primeflex.css';
 import { BrowserRouter } from 'react-router-dom';
 
+import 'primeflex/primeflex.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; // או ערכת נושא אחרת
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const myStore = configureStore({
   reducer: {
