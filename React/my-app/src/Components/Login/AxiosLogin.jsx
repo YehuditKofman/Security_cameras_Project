@@ -1,27 +1,33 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { Create_Member } from '../../Store/MemberSlice';
+import { Create_Administrator } from '../../Store/AdministratorSlice';
 
 const AxiosLogin = ({ memberData }) => {
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const handleCreateAdmin = async () => {
             try {
-                const {  password, email  } = memberData;
-                const preparedData = {
-                    password,
-                    email
-                };
+                const { password, email } = memberData;
                 const response = await axios.post(
-                    `http://localhost:8080/Administators/loginAdministrator`,    {
+                    `http://localhost:8080/Administators/loginAdministrator`,
+                    {
                         email: memberData.email,
-                        password: memberData.password
+                        password: memberData.password,
                     }
-
                 );
-               
+                if (response.data.role === 'Member') {
+                    dispatch(Create_Member(response.data)); // קריאה ל-dispatch עם הנתונים
+                }
+                else{
+                    dispatch(Create_Administrator(response.data));
+                }
+
                 alert('Login created successfully!');
             } catch (error) {
                 if (error.response) {
-
                     console.error('Failed to create administrator:', error.response.data);
                     alert('Failed to create administrator: ' + error.response.data.message);
                 } else {
@@ -32,11 +38,10 @@ const AxiosLogin = ({ memberData }) => {
         };
 
         handleCreateAdmin();
-    }, [memberData]); // שימי לב לתלות - רץ כשהערכים משתנים
+    }, [memberData, dispatch]); // הוספת dispatch לתלות
 
     return (
         <>
-            {/* אפשר לשים כאן משהו זמני אם את רוצה, אבל לא חובה */}
             <p>login</p>
         </>
     );

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialValue={
-    id_:"",
+    _id:"",
     name:"Administrator",
     email:"",
     phone:"",
@@ -17,6 +17,7 @@ const AdministratorSlice= createSlice({
     initialState: initialValue,
     reducers:{
         Create_Administrator:(state,action)=>{
+            state._id= action.payload._id
             state.name= action.payload.name
             state.email= action.payload.email
             state.phone= action.payload.phone
@@ -26,6 +27,7 @@ const AdministratorSlice= createSlice({
             state.arrSecurityCameras= action.payload.arrSecurityCameras
             state.arrAnalysisSchema= action.payload.arrAnalysisSchema
         }
+        
         
         
     }

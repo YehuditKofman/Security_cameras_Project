@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 function UploadVideo() {
-    const adminId = '68043ccf8b5cb28fe901eb41' // Assuming you have the adminId stored in localStorage
+   
+     
+    
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const admin = useSelector((state) => state.AdministratorSlice); // <-- שליפת הנתונים
+    const adminId = admin._id; 
+    console.log("jioji",adminId); // <-- הדפסת הנתונים לקונסול
 
     const token = localStorage.getItem("token"); // אם אתה שומר את הטוקן ב-localStorage
     if (!token) {
