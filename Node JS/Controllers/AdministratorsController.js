@@ -1,4 +1,6 @@
+const { use } = require("react");
 const Administators = require("../Moduls/AdministatorsModule")
+
 const Members = require("../Moduls/MembersModule")
 const SecurityCameras = require("../Moduls/SecurityCamerasModule");
 const bcrypt = require("bcrypt");
@@ -45,10 +47,12 @@ async function loginAdministrator(req, res) {
         const { email, password } = req.body;
 
         // ננסה קודם לחפש את המשתמש בטבלת המנהלים
-        let user = await Administators.findOne({ email });
-
-        let role = "Administrator";
-
+        let user=null;
+        let role = null;
+        user= await Administators.findOne({ email });
+        if(user!=null){
+            role = "Administrator";
+        }
         if (!user) {
             // אם לא נמצא - נבדוק בטבלת העובדים
             user = await Members.findOne({ email });
@@ -72,7 +76,7 @@ async function loginAdministrator(req, res) {
 
         // יצירת טוקן לאחר התחברות מוצלחת
         const token = jwt.sign(
-            { id: admin._id, role: "Administrator" },
+            { id: user._id, role: role },
             process.env.SECRET
         );
 

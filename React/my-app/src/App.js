@@ -17,6 +17,7 @@ import 'primeflex/primeflex.css';
 
 import { Video } from 'lucide-react';
 import VideoCard  from './Components/GetSecurity';
+import Login from './Components/Login/Login';
 
 
 // import AxiosDeleteMember from './Components/DeleteMember/AxiosDeleteMember';
@@ -49,6 +50,7 @@ function App() {
           <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
         </Routes> */}
       </BrowserRouter>
+      <Login/>
       {/* <GetAllmembersName/> */}
       <Table/>
 

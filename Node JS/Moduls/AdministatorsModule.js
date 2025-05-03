@@ -1,7 +1,8 @@
 const e = require("express")
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt");
-const AdministartorsModule = mongoose.Schema({
+
+const AdministratorsSchema = mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
@@ -17,11 +18,8 @@ const AdministartorsModule = mongoose.Schema({
     }]
 }) 
 
-
-
-AdministartorsModule.methods.comparePassword = async function (password) {
+AdministratorsSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
-module.exports = mongoose.model( "Administrators",AdministartorsModule )
-
+module.exports = mongoose.model("Administrators", AdministratorsSchema)
