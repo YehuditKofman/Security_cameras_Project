@@ -20,13 +20,14 @@ const AxiosLogin = ({ memberData }) => {
 
                 const token = response.data.token;
                 localStorage.setItem('token', token);
-                
+                console.log('Response:', response.data); // הוספת לוג כדי לבדוק את התגובה
+
                 if (response.data.role === 'Member') {
                     dispatch(Create_Member(response.data));
                 } else {
                     dispatch(Create_Administrator(response.data));
                 }
-                console.log('Login successful!', response.data);
+                console.log('Login successful!', memberData);
                 alert('Login successful!');
             } catch (error) {
                 const message =

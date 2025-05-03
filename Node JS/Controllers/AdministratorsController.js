@@ -28,7 +28,7 @@ async function createAdministrator(req, res) {
         const token = jwt.sign(
             { id: newAdmin._id, role: "Administrator" },
             process.env.SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "1h" }
         );
 
         res.status(201).send({
@@ -76,12 +76,15 @@ async function loginAdministrator(req, res) {
         // יצירת טוקן
         const token = jwt.sign(
             { id: user._id, role: role },
-            process.env.SECRET
+            process.env.SECRET,
+            { expiresIn: "1h" }
         );
 
         res.status(200).send({
             message: "Login successful!",
-            token: token
+            token: token,
+            role: role,
+            user: user  // כאן נמצא גם _id של MongoDB
         });
     } catch (error) {
         console.error("Error logging in administrator:", error);
