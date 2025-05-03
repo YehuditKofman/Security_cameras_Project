@@ -31,7 +31,13 @@ async function createAdministrator(req, res) {
             message: "Administrator created successfully!",
             token: token,
             name: newAdmin.name,
+            _id: newAdmin._id,
+            email: newAdmin.email,
+            phone: newAdmin.phone,
+            role: "Administrator"
         });
+        
+        
     } catch (error) {
         console.error("Error creating administrator:", error);
         res.status(500).send("Failed to create administrator.");
@@ -72,7 +78,7 @@ async function loginAdministrator(req, res) {
 
         // יצירת טוקן לאחר התחברות מוצלחת
         const token = jwt.sign(
-            { id: admin._id, role: "Administrator" },
+            { id: user._id, role: "Administrator" },
             process.env.SECRET
         );
 

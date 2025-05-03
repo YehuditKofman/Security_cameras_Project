@@ -4,19 +4,27 @@ import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
 import { Badge } from 'primereact/badge';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const VideoCard = () => {
+const GetSecurity = () => {
   const [videoFilename, setVideoFilename] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [playing, setPlaying] = useState(false); 
   const videoRef = useRef(null); 
   const menu = useRef(null);
+  
+  const admin = useSelector((state)=>state.AdministratorSlice); // Assuming you have a Redux slice for administrator
+  console.log(admin._id); 
 
   useEffect(() => {
+    if (!admin._id) return;
+
     const fetchVideo = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/Administators/getAllSecurityCamerasByAdministrator/68043ccf8b5cb28fe901eb41');
+        console.log(admin._id); // Check if admin ID is available
+        const response = await axios.get(`http://localhost:8080/Administators/getAllSecurityCamerasByAdministrator/${admin._id}`); // Update the URL as needed
+        console.log(response.data); // Check the response data
         const videoData = response.data;
         if (videoData.length > 0) {
           setVideoFilename(videoData[0].filePath);
@@ -30,7 +38,7 @@ const VideoCard = () => {
     };
 
     fetchVideo();
-  }, []);
+  }, [admin._id]); // Fetch video when admin ID changes
 
   const togglePlay = () => {
     if (playing) {
@@ -96,7 +104,6 @@ const VideoCard = () => {
         }}
         footer={footer}
       >
-
         {/* Video Player Section */}
         <div 
           className="video-player-container relative" 
@@ -166,4 +173,4 @@ const VideoCard = () => {
   );
 };
 
-export default VideoCard;
+export default GetSecurity;
