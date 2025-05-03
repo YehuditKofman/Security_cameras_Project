@@ -11,16 +11,13 @@ import 'primeicons/primeicons.css';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [flag, setFlag] = useState(false);
+    const [memberData, setMemberData] = useState(null); // 👈 מצב לשליחה לשרת
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-    };
-
-    const handleClick = () => {
-        setFlag(!flag);
+        if (email && password) {
+            setMemberData({ email, password }); // 👈 נשלח ל-AxiosLogin רק לאחר לחיצה
+        }
     };
 
     return (
@@ -81,7 +78,6 @@ const Login = () => {
                             icon="pi pi-sign-in"
                             className="p-button-primary"
                             type="submit"
-                            onClick={handleClick}
                             style={{
                                 width: '100%',
                                 fontSize: '1rem',
@@ -90,15 +86,10 @@ const Login = () => {
                             }}
                         />
                     </div>
-                    {flag && (
-                        <AxiosLogin
-                            memberData={{
-                                password: password,
-                                email: email,
-                            }}
-                        />
-                    )}
                 </form>
+
+                {/* מתבצע רק לאחר לחיצה וערכים תקינים */}
+                {memberData && <AxiosLogin memberData={memberData} />}
             </Card>
         </div>
     );

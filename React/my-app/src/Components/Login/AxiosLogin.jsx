@@ -8,9 +8,8 @@ const AxiosLogin = ({ memberData }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const handleCreateAdmin = async () => {
+        const handleLogin = async () => {
             try {
-                const { password, email } = memberData;
                 const response = await axios.post(
                     `http://localhost:8080/Administators/loginAdministrator`,
                     {
@@ -18,33 +17,29 @@ const AxiosLogin = ({ memberData }) => {
                         password: memberData.password,
                     }
                 );
+
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                
                 if (response.data.role === 'Member') {
-                    dispatch(Create_Member(response.data)); // קריאה ל-dispatch עם הנתונים
-                }
-                else{
+                    dispatch(Create_Member(response.data));
+                } else {
                     dispatch(Create_Administrator(response.data));
                 }
-
-                alert('Login created successfully!');
+                console.log('Login successful!', response.data);
+                alert('Login successful!');
             } catch (error) {
-                if (error.response) {
-                    console.error('Failed to create administrator:', error.response.data);
-                    alert('Failed to create administrator: ' + error.response.data.message);
-                } else {
-                    console.error('Error during creation:', error.message);
-                    alert('Error during creation: ' + error.message);
-                }
+                const message =
+                    error.response?.data?.message || 'Unexpected error occurred';
+                console.error('Login failed:', message);
+                alert('Login failed: ' + message);
             }
         };
 
-        handleCreateAdmin();
-    }, [memberData, dispatch]); // הוספת dispatch לתלות
+        handleLogin();
+    }, [memberData, dispatch]);
 
-    return (
-        <>
-            <p>login</p>
-        </>
-    );
+    return null; // לא צריך להציג שום דבר
 };
 
 export default AxiosLogin;

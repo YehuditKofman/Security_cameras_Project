@@ -28,6 +28,11 @@ const CreateAdministrator = ({ adminData }) => {
                 );
                 console.log(response.data);
                 const newId = response.data._id;
+                const token = response.data.token; // קבלת הטוקן
+                
+                // שמירת הטוקן ב-localStorage
+                localStorage.setItem('token', token);
+
 
                 dispatch(Create_Administrator({
                     _id: newId,
