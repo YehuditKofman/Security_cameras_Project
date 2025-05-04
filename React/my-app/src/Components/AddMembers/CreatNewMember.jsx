@@ -14,6 +14,7 @@ import {
     TreeSelect,
 } from 'antd';
 import AxiosCreteMemberByAdministrator from './AxiosCreateMemberByAdministrator';
+import { useSelector } from 'react-redux';
 
 const CreatNewMember = () => {
 
@@ -29,8 +30,9 @@ const CreatNewMember = () => {
         arrAnalysisSchema: [],
         AccessPermissions: []
     });
+    const admin = useSelector((state) => state.AdministratorSlice); // <-- שליפת הנתונים
 
-    const ID = "68043ccf8b5cb28fe901eb41"; // תעודת זהות של המנהל
+    const ID = admin._id; // תעודת זהות של המנהל
     const { RangePicker } = DatePicker;
     const { Option } = Select;
     const tailFormItemLayout = {

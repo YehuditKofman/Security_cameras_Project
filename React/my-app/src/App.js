@@ -46,10 +46,9 @@ function App() {
           <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
         </Routes> 
       </BrowserRouter>
-      <GetSecurity/>
-      <Login/>
+     <UploadVideo/>
+  <GetSecurity/>
       {/* <GetAllmembersName/> */}
-      <Table/>
 
     </>
 
