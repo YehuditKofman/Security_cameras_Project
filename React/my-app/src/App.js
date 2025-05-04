@@ -18,6 +18,7 @@ import 'primeflex/primeflex.css';
 import { Video } from 'lucide-react';
 import VideoCard  from './Components/GetSecurity';
 import Login from './Components/Login/Login';
+import GetSecurity from './Components/GetSecurity';
 
 
 // import AxiosDeleteMember from './Components/DeleteMember/AxiosDeleteMember';
@@ -46,6 +47,8 @@ function App() {
         </Routes> 
       </BrowserRouter>
       <Login/>
+     <UploadVideo/>
+  <GetSecurity/>
       {/* <GetAllmembersName/> */}
       <Table/>
 

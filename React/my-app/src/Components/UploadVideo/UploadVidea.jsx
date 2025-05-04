@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
-function UploadVideo() {
+
+const  UploadVideo=()=> {
    
-     
-    
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const admin = useSelector((state) => state.AdministratorSlice); // <-- שליפת הנתונים
     const adminId = admin._id; 
-    console.log("jioji",adminId); // <-- הדפסת הנתונים לקונסול
+    console.log("jioji",admin); // <-- הדפסת הנתונים לקונסול
 
     const token = localStorage.getItem("token"); // אם אתה שומר את הטוקן ב-localStorage
     if (!token) {
