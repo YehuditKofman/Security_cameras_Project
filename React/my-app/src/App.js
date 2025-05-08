@@ -1,61 +1,54 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import './App.css';
-import UploadVideo from './Components/UploadVideo/UploadVidea';
-import GetAllmembersName from './Components/GetAllMembersName/GetAllmembersName';
-import fetchVideo from './Components/GetSecurity';
-import Table from './Components/TableMembers/Table';
-import SighInAdministrator from './Components/SighInAdministrator';
-import CreatNewMember from './Components/AddMembers/CreatNewMember';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
-import 'primereact/resources/themes/lara-light-indigo/theme.css';  // theme
-import 'primereact/resources/primereact.min.css';                  // core css
-import 'primeicons/primeicons.css';                                // icons
-import 'primeflex/primeflex.css';    
-
-
-
-import { Video } from 'lucide-react';
-import VideoCard  from './Components/GetSecurity';
-import Login from './Components/Login/Login';
+import SideBar from './Components/SideBar';
 import GetSecurity from './Components/GetSecurity';
+import UploadVideo from './Components/UploadVideo/UploadVidea';
+
+// const LazyNavBar = React.lazy(() => import('./Components/NavBar'));
+const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
+const LazySighIn = React.lazy(() => import('./Components/SighInAdministrator'));
+const LazyHome = React.lazy(() => import('./Components/Home'));
+const LasyPersonalArea = React.lazy(() => import('./Components/PersonalArea'));
+const LazyGetSecurity = React.lazy(() => import('./Components/GetSecurity'));
 
 
-// import AxiosDeleteMember from './Components/DeleteMember/AxiosDeleteMember';
-const LazyNavBar = React.lazy(() => import('./Components/NavBar'))
-const LazyLogin = React.lazy(() => import('./Components/Login/Login'))
-const LazySighIn = React.lazy(() => import('./Components/SighInAdministrator'))
-const LazyHome = React.lazy(() => import('./Components/Home'))
+function LayoutWithSidebar({ children }) {
+  return <><SideBar />{children}</>;
+}
+
+function AppContent() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  return (
+    <>
+      {/* <Suspense fallback={'loading...'}><LazyNavBar /></Suspense> */}
+      <Routes>
+        <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
+        <Route path="/Sigh-In" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazySighIn /></Suspense></LayoutWithSidebar>} />
+        <Route path="/Login" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyLogin /></Suspense></LayoutWithSidebar>} />
+        <Route path="/Login/PersonalArea" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LasyPersonalArea /></Suspense></LayoutWithSidebar>} />
+        <Route path="/GetSecurity" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyGetSecurity /></Suspense></LayoutWithSidebar>} />
+        {/* <Route path="/recordings" element={<Recordings />} />
+        <Route path="/analysis" element={<Analysis />} />
+        <Route path="/storage" element={<Storage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<Login />} /> */}
+      </Routes>
+    </>
+  );
+}
 
 function App() {
-  return (
-
-
-    <>
-   
-
-      <BrowserRouter>
-
-        
-
-        <Suspense fallback={'loading...'}><LazyNavBar /></Suspense>
-          
-        <Routes>
-          <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
-          <Route path="/Sigh-In" element={<Suspense fallback={'loading...'}><LazySighIn /></Suspense>} />
-          <Route path="/Login" element={<Suspense fallback={'loading...'}><LazyLogin /></Suspense>} />
-        </Routes> 
-      </BrowserRouter>
-      <Login/>
-     <UploadVideo/>
-  <GetSecurity/>
-      {/* <GetAllmembersName/> */}
-      <Table/>
-
-    </>
-
-
-  );
+  return <BrowserRouter>
+    <AppContent />
+  </BrowserRouter>;
 }
 
 export default App;

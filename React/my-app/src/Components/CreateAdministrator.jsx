@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Create_Administrator } from '../Store/AdministratorSlice';
+import { Create_User } from '../Store/UserSlice';
 
 const CreateAdministrator = ({ adminData }) => {
     const dispatch = useDispatch();
@@ -41,6 +42,8 @@ const CreateAdministrator = ({ adminData }) => {
                 }));
 
                 alert('Administrator created successfully!');
+                 dispatch(Create_User({ role: response.data.role ,name: response.data.name}));
+                
             } catch (error) {
                 if (error.response) {
                     console.error('Failed to create administrator:', error.response.data);
