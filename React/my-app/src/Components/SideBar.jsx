@@ -115,6 +115,7 @@ const SideBar = () => {
                 <div className={`custom-sidebar ${isMobileOpen ? 'open' : ''}`}>
                     <div className="logo">SecurityVision</div>
                     <div className="menu" onClick={() => setIsMobileOpen(false)}>
+                        <Link to="/ControlPanel"><i className="pi pi-video"></i> לוח </Link>
                         <Link to="/GetSecurity"><i className="pi pi-video"></i> Cameras</Link>
                         <Link to="/Table"><i className="pi pi-play"></i> table members</Link>
                         <Link to="/analysis"><i className="pi pi-chart-line"></i> Analysis</Link>
