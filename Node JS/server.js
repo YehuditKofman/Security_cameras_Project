@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const app = express(); // אתחול המשתנה app
 app.use(express.json()); // חובה כדי לפרסר JSON
 app.use(cors());
-
+    
 
 
 

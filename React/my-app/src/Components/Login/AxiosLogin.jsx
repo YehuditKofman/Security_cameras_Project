@@ -23,7 +23,6 @@ const AxiosLogin = ({ memberData }) => {
                 console.log('Response:', response.data); // הוספת לוג כדי לבדוק את התגובה
 
                 if (response.data.role === 'Member') {
-                    
                     dispatch(Create_Member(response.data.user));
                 } else {
                     dispatch(Create_Administrator(response.data.user));

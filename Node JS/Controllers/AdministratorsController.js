@@ -3,6 +3,8 @@ const Members = require("../Moduls/MembersModule");
 const SecurityCameras = require("../Moduls/SecurityCamerasModule");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const { sendEmail } = require('../Middleware/email'); // עדכן את הנתיב לפי מיקום הקובץ email.js
+
 
 // יצירת מנהל מצלמות אבטחה חדש
 async function createAdministrator(req, res) {
@@ -282,7 +284,24 @@ async function getMemberCountByAdministrator(req, res) {
         res.status(500).send("Failed to get member count.");
     }
 }
+async function updateMemberByAdministrator(req, res) {
+    try {
+        const { id } = req.params;
+        const { memberId } = req.body;
 
+        // עדכון פרטי העובד
+        const updatedMember = await Members.findByIdAndUpdate(memberId, req.body, { new: true });
+
+        if (!updatedMember) {
+            return res.status(404).send("Member not found.");
+        }
+
+        res.status(200).send("Member updated successfully!");
+    } catch (error) {
+        console.error("Error updating member:", error);
+        res.status(500).send("Failed to update member.");
+    }
+}
 async function getCameraCountByAdministrator(req, res) {
     try {
         const { id } = req.params;
@@ -308,7 +327,7 @@ async function getRecentCameraCountByAdministrator(req, res) {
 
         // מחשבים את תאריך לפני שבוע
         const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() -7);
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
         // סופרים כמה מצלמות של המנהל הועלו בשבוע האחרון
         const cameraCount = await SecurityCameras.countDocuments({
@@ -335,5 +354,6 @@ module.exports = {
     createSecurityCamerasByAdministrator,
     loginAdministrator,
     deleteMemberByAdministrator,
-    getAllSecurityCamerasByAdministrator
+    getAllSecurityCamerasByAdministrator,
+    updateMemberByAdministrator
 };
