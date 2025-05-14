@@ -1,4 +1,3 @@
-
 const express = require("express")
 const verifyToken = require("../Middleware/auth").verifyToken;
 const upload = require("../Middleware/upload"); // הוספה של המידלוור
@@ -25,6 +24,5 @@ router.get("/getAllMembersNamesByAdministrator/:id",verifyToken,getAllMembersNam
 router.get("/getAllSecurityCamerasByAdministrator/:id",getAllSecurityCamerasByAdministrator)
 
 router.delete("/deleteMemberByAdministrator/:id",verifyToken,deleteMemberByAdministrator)
-
 
 module.exports = router
