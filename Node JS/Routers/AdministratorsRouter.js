@@ -20,7 +20,7 @@ router.put("/updateMemberByAdministrator/:id",verifyToken,updateMemberByAdminist
 
 router.get("/getAdministratorById/:id",getAdministratorById)
 router.get("/getMemberCountByAdministrator/:id",getMemberCountByAdministrator)
-router.get("/getAllMembersByAdministrator/:id",verifyToken,getAllMembersByAdministrator)
+router.get("/getAllMembersByAdministrator/:id",getAllMembersByAdministrator)
 router.get("/getRecentCameraCountByAdministrator/:id",getRecentCameraCountByAdministrator)
 router.get("/getCameraCountByAdministrator/:id",verifyToken,getCameraCountByAdministrator)
 router.get("/getAllMembersNamesByAdministrator/:id",verifyToken,getAllMembersNamesByAdministrator)
