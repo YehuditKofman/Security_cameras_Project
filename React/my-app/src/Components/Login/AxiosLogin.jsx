@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Create_Member } from '../../Store/MemberSlice';
 import { Create_Administrator } from '../../Store/AdministratorSlice';
-
+import { Create_User } from '../../Store/UserSlice';
 const AxiosLogin = ({ memberData }) => {
     const dispatch = useDispatch();
 
@@ -27,6 +27,7 @@ const AxiosLogin = ({ memberData }) => {
                 } else {
                     dispatch(Create_Administrator(response.data.user));
                 }
+                dispatch(Create_User({ role: response.data.role ,name: response.data.user.name}));
                 console.log('Login successful!', memberData);
                 alert('Login successful!');
             } catch (error) {

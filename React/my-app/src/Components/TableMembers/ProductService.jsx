@@ -1,23 +1,23 @@
+// ProductService.jsx
 import { fetchAllMembers } from "./AxiosAllMembers";
 
 export const ProductService = {
-
-    async getProductsData() {
-        const members = await fetchAllMembers();
+    async getProductsData(administratorId) {
+        const members = await fetchAllMembers(administratorId);
         return members;
     },
 
-    async getProductsMini() {
-        const data = await this.getProductsData();
+    async getProducts(administratorId) {
+        return await this.getProductsData(administratorId);
+    },
+
+    async getProductsMini(administratorId) {
+        const data = await this.getProductsData(administratorId);
         return data.slice(0, 5);
     },
 
-    async getProductsSmall() {
-        const data = await this.getProductsData();
+    async getProductsSmall(administratorId) {
+        const data = await this.getProductsData(administratorId);
         return data.slice(0, 10);
     },
-
-    async getProducts() {
-        return await this.getProductsData();
-    }
 };

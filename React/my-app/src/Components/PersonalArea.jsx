@@ -1,3 +1,4 @@
+
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
-const GetSecurity = () => {
+const PersonalArea = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const admin = useSelector((state) => state.AdministratorSlice);
@@ -174,4 +175,4 @@ const GetSecurity = () => {
   );
 };
 
-export default GetSecurity;
+export default PersonalArea;

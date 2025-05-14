@@ -3,6 +3,8 @@ const Members = require("../Moduls/MembersModule");
 const SecurityCameras = require("../Moduls/SecurityCamerasModule");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const { sendEmail } = require('../Middleware/email'); // עדכן את הנתיב לפי מיקום הקובץ email.js
+
 
 // יצירת מנהל מצלמות אבטחה חדש
 async function createAdministrator(req, res) {
@@ -263,6 +265,25 @@ async function deleteMemberByAdministrator(req, res) {
         res.status(500).send("Failed to delete member.");
     }
 }
+//עידכון פרטי עובד קיים
+async function updateMemberByAdministrator(req, res) {
+    try {
+        const { id } = req.params;
+        const { memberId } = req.body;
+
+        // עדכון פרטי העובד
+        const updatedMember = await Members.findByIdAndUpdate(memberId, req.body, { new: true });
+
+        if (!updatedMember) {
+            return res.status(404).send("Member not found.");
+        }
+
+        res.status(200).send("Member updated successfully!");
+    } catch (error) {
+        console.error("Error updating member:", error);
+        res.status(500).send("Failed to update member.");
+    }
+}
 
 module.exports = {
     createAdministrator,
@@ -274,5 +295,6 @@ module.exports = {
     createSecurityCamerasByAdministrator,
     loginAdministrator,
     deleteMemberByAdministrator,
-    getAllSecurityCamerasByAdministrator
+    getAllSecurityCamerasByAdministrator,
+    updateMemberByAdministrator
 };
