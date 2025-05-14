@@ -9,6 +9,9 @@ import 'primeflex/primeflex.css';
 import SideBar from './Components/SideBar';
 import GetSecurity from './Components/GetSecurity';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
+import ControlPanel from './Components/ControlPanel/ControlPanel';
+import CreatNewMember from './Components/AddMembers/CreatNewMember';
+import GetAllMembersName from './Components/GetAllMembersName/GetAllmembersName';
 
 // const LazyNavBar = React.lazy(() => import('./Components/NavBar'));
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
@@ -40,6 +43,7 @@ function AppContent() {
         <Route path="/storage" element={<Storage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} /> */}
+      
       </Routes>
     </>
   );
@@ -48,6 +52,7 @@ function AppContent() {
 function App() {
   return <BrowserRouter>
     <AppContent />
+    <ControlPanel/> 
   </BrowserRouter>;
 }
 
