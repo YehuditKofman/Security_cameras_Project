@@ -9,8 +9,7 @@ import 'primeflex/primeflex.css';
 import SideBar from './Components/SideBar';
 import GetSecurity from './Components/GetSecurity';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
-import CreateAdministrator from './Components/CreateAdministrator';
-import CreatNewMember from './Components/AddMembers/CreatNewMember';
+import ControlPanel from './Components/ControlPanel/ControlPanel';
 
 // const LazyNavBar = React.lazy(() => import('./Components/NavBar'));
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
@@ -54,6 +53,7 @@ function AppContent() {
 function App() {
   return <BrowserRouter>
     <AppContent />
+    <ControlPanel/> 
   </BrowserRouter>;
 }
 

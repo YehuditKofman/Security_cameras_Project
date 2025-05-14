@@ -4,10 +4,9 @@ const upload = require("../Middleware/upload"); // הוספה של המידלו�
 
 const router = express.Router()
 
-const {createAdministrator,updateAdministrator,getAdministratorById,
-    getAllMembersByAdministrator,createMemberByAdministrator,getAllMembersNamesByAdministrator,
-    createSecurityCamerasByAdministrator,loginAdministrator,deleteMemberByAdministrator,getAllSecurityCamerasByAdministrator,
-    updateMemberByAdministrator} = require("../Controllers/AdministratorsController")
+const {createAdministrator,updateAdministrator,getAdministratorById,getMemberCountByAdministrator,getCameraCountByAdministrator,
+    getAllMembersByAdministrator,getRecentCameraCountByAdministrator,createMemberByAdministrator,getAllMembersNamesByAdministrator,
+    createSecurityCamerasByAdministrator,loginAdministrator,deleteMemberByAdministrator,getAllSecurityCamerasByAdministrator,updateMemberByAdministrator} = require("../Controllers/AdministratorsController")
 
 
 router.post("/createAdministrator",createAdministrator)
@@ -19,7 +18,10 @@ router.post("/loginAdministrator",loginAdministrator)
 router.put("/updateMemberByAdministrator/:id",verifyToken,updateMemberByAdministrator)
 
 router.get("/getAdministratorById/:id",getAdministratorById)
+router.get("/getMemberCountByAdministrator/:id",getMemberCountByAdministrator)
 router.get("/getAllMembersByAdministrator/:id",getAllMembersByAdministrator)
+router.get("/getRecentCameraCountByAdministrator/:id",getRecentCameraCountByAdministrator)
+router.get("/getCameraCountByAdministrator/:id",verifyToken,getCameraCountByAdministrator)
 router.get("/getAllMembersNamesByAdministrator/:id",verifyToken,getAllMembersNamesByAdministrator)
 router.get("/getAllSecurityCamerasByAdministrator/:id",getAllSecurityCamerasByAdministrator)
 

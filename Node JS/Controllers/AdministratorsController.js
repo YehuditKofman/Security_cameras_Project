@@ -265,7 +265,25 @@ async function deleteMemberByAdministrator(req, res) {
         res.status(500).send("Failed to delete member.");
     }
 }
-//עידכון פרטי עובד קיים
+//פונקציה המחזירה את כמות העובדים שיש למנהל זה 
+async function getMemberCountByAdministrator(req, res) {
+    try {
+        const { id } = req.params;
+
+        const administrator = await Administrators.findById(id).select('arrMembers');
+
+        if (!administrator) {
+            return res.status(404).send("Administrator not found.");
+        }
+
+        const memberCount = administrator.arrMembers.length;
+
+        res.status(200).json({ memberCount });
+    } catch (error) {
+        console.error("Error fetching member count:", error);
+        res.status(500).send("Failed to get member count.");
+    }
+}
 async function updateMemberByAdministrator(req, res) {
     try {
         const { id } = req.params;
@@ -284,8 +302,49 @@ async function updateMemberByAdministrator(req, res) {
         res.status(500).send("Failed to update member.");
     }
 }
+async function getCameraCountByAdministrator(req, res) {
+    try {
+        const { id } = req.params;
 
+        const administrator = await Administrators.findById(id).select('arrSecurityCameras');
+
+        if (!administrator) {
+            return res.status(404).send("Administrator not found.");
+        }
+
+        const cameraCount = administrator.arrSecurityCameras.length;
+
+        res.status(200).json({ cameraCount });
+    } catch (error) {
+        console.error("Error fetching camera count:", error);
+        res.status(500).send("Failed to get camera count.");
+    }
+}
+//פונקציה המחזירה את כמות מצלמות האבטחה שהועלו בשבוע האחרון על ידי המנהל
+async function getRecentCameraCountByAdministrator(req, res) {
+    try {
+        const { id } = req.params; // זהו ה־ID של המנהל
+
+        // מחשבים את תאריך לפני שבוע
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+        // סופרים כמה מצלמות של המנהל הועלו בשבוע האחרון
+        const cameraCount = await SecurityCameras.countDocuments({
+            administartorID: id,
+            date: { $gte: oneWeekAgo }
+        });
+
+        res.status(200).json({ cameraCount });
+    } catch (error) {
+        console.error("Error fetching recent camera count:", error);
+        res.status(500).send("Failed to get camera count.");
+    }
+}
 module.exports = {
+    getRecentCameraCountByAdministrator,
+    getCameraCountByAdministrator,
+    getMemberCountByAdministrator,
     createAdministrator,
     updateAdministrator,
     getAdministratorById,
