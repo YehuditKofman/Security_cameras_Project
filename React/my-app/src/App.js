@@ -18,7 +18,7 @@ const LazyHome = React.lazy(() => import('./Components/Home'));
 const LasyPersonalArea = React.lazy(() => import('./Components/PersonalArea'));
 const LazyGetSecurity = React.lazy(() => import('./Components/GetSecurity'));
 const LazyTable = React.lazy(() => import('./Components/TableMembers/Table'));
-
+const LazyControlPanel = React.lazy(() => import('./Components/ControlPanel/ControlPanel'));
 
 function LayoutWithSidebar({ children }) {
   return <><SideBar />{children}</>;
@@ -39,6 +39,7 @@ function AppContent() {
         <Route path="/Login/PersonalArea" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LasyPersonalArea /></Suspense></LayoutWithSidebar>} />
         <Route path="/GetSecurity" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyGetSecurity /></Suspense></LayoutWithSidebar>} />
         <Route path="/Table" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyTable /></Suspense></LayoutWithSidebar>} />
+        <Route path="/ControlPanel" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyControlPanel /></Suspense></LayoutWithSidebar>} />
         {/* <Route path="/recordings" element={<Recordings />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/storage" element={<Storage />} />
@@ -53,7 +54,7 @@ function AppContent() {
 function App() {
   return <BrowserRouter>
     <AppContent />
-    <ControlPanel/> 
+
   </BrowserRouter>;
 }
 
