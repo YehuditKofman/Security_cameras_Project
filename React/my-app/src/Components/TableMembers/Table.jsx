@@ -87,20 +87,34 @@ const Table = () => {
     };
 
     const saveProductHandler = async () => {
-        setSubmitted(true);
-        if (product.name.trim()) {
-            try {
-                const response = await AxiosUpdateMember(product, admin, token);
-                if (response.status === 200) {
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-                    // עדכון הנתונים לאחר שמירה מוצלחת
-                    setProduct(emptyProduct);
-                }
-            } catch (error) {
-                toast.current.show({ severity: 'error', summary: 'Error', detail: 'Failed to update product', life: 3000 });
+    setSubmitted(true);
+    if (product.name.trim()) {
+        try {
+            const response = await AxiosUpdateMember(product, admin, token);
+            if (response.status === 200) {
+                toast.current.show({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Product Updated',
+                    life: 3000
+                });
+
+                await ProductService.getProducts(admin._id).then((data) => setProducts(data));
+
+                setProductDialog(false); // ✅ סוגר את הדיאלוג
+                setProduct(emptyProduct); // מאפס את הטופס
             }
+        } catch (error) {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to update product',
+                life: 3000
+            });
         }
-    };
+    }
+};
+
     // const saveProduct = () => {
     //     setSubmitted(true);
 
@@ -137,7 +151,7 @@ const Table = () => {
     };
 
     const deleteProduct = () => {
-        let _products = products.filter((val) => val.id !== product.id);
+        let _products = products.filter((val) => val._id !== product._id);
 
         setProducts(_products);
         setDeleteProductDialog(false);
@@ -332,7 +346,7 @@ const Table = () => {
                 visible={productDialog}
                 style={{ width: '32rem' }}
                 breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-                header="User Details"
+                header="Memberr Details"
                 modal
                 className="p-fluid"
                 footer={productDialogFooter}
@@ -378,7 +392,7 @@ const Table = () => {
                 </div>
 
                 {/* Password */}
-                <div className="field">
+                {/* <div className="field">
                     <label htmlFor="password" className="font-bold">Password</label>
                     <InputText
                         id="password"
@@ -391,7 +405,7 @@ const Table = () => {
                     {submitted && !product.password && (
                         <small className="p-error">Password is required.</small>
                     )}
-                </div>
+                </div> */}
 
                 {/* Phone */}
                 <div className="field">

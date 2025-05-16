@@ -1,25 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
-function Cameras() { return <h2>Cameras</h2>; }
-function Recordings() { return <h2>Recordings</h2>; }
-function Analysis() { return <h2>Analysis</h2>; }
-function Storage() { return <h2>Storage</h2>; }
-function Settings() { return <h2>Settings</h2>; }
-function Login() { return <h2>Login</h2>; }
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
-
-    const userSlice = useSelector((state) => state.UserSlice); // <-- שליפת הנתונים
-   console.log(userSlice);
-
+    const userSlice = useSelector((state) => state.UserSlice);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
-
     const toggleSidebar = () => setIsMobileOpen(!isMobileOpen);
 
     return (
-       <>
+        <>
             <style>{`
                 .layout {
                     display: flex;
@@ -55,7 +44,7 @@ const SideBar = () => {
                     transition: background 0.3s;
                 }
                 .custom-sidebar .menu a:hover {
-                    background-color: rgba(255, 255, 255, 0.04);
+                    background-color: rgba(255, 255, 255, 0.1);
                 }
                 .footer {
                     text-align: center;
@@ -75,9 +64,8 @@ const SideBar = () => {
                     justify-content: center;
                     font-weight: bold;
                 }
-              
 
-                /* MOBILE */
+                /* כפתור תפריט לנייד */
                 .mobile-toggle {
                     display: none;
                     position: fixed;
@@ -91,6 +79,13 @@ const SideBar = () => {
                     border-radius: 4px;
                     font-size: 1.2rem;
                 }
+
+                .main-content {
+                    margin-left: 230px;
+                    padding: 2rem;
+                    width: 100%;
+                }
+
                 @media (max-width: 768px) {
                     .custom-sidebar {
                         transform: translateX(-100%);
@@ -117,7 +112,7 @@ const SideBar = () => {
                     <div className="menu" onClick={() => setIsMobileOpen(false)}>
                         <Link to="/ControlPanel"><i className="pi pi-video"></i> לוח </Link>
                         <Link to="/GetSecurity"><i className="pi pi-video"></i> Cameras</Link>
-                        <Link to="/Table"><i className="pi pi-play"></i> table members</Link>
+                        <Link to="/Table"><i className="pi pi-play"></i> Table Members</Link>
                         <Link to="/analysis"><i className="pi pi-chart-line"></i> Analysis</Link>
                         <Link to="/storage"><i className="pi pi-server"></i> Storage</Link>
                         <Link to="/settings"><i className="pi pi-cog"></i> Settings</Link>
@@ -126,15 +121,15 @@ const SideBar = () => {
                     <div className="footer">
                         <div>Security Inc.</div>
                         <div className="footer-sub">Premium Member</div>
-                        <div className="avatar">{userSlice.name[0]}</div>
+                        <div className="avatar">{userSlice.name?.[0] || "?"}</div>
                     </div>
                 </div>
 
                 <div className="main-content">
-                   
+                    {/* כאן יופיע התוכן של כל דף */}
                 </div>
             </div>
-      </>
+        </>
     );
 };
 

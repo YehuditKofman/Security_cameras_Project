@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Create_Member } from "../../Store/MemberSlice"; 
-
+import { Create_Member } from "../../Store/MemberSlice";
+import ALL_PERMISSIONS from '../AddMembers/AllPermissions'; // שוב - התאימי נתיב
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
@@ -18,17 +18,18 @@ const AxiosCreteMemberByAdministrator = ({ ID, memberData }) => {
                     phone: `+${memberData.pre}${phone}`,
                     password,
                     email,
-                    AccessPermissions: AccessPermissions.map(permission => ({
+                    AccessPermissions: ALL_PERMISSIONS.map(permission => ({
                         sortPermissions: permission,
-                        isPermissions: true
-                    })),
+                        isPermissions: AccessPermissions.includes(permission)
+                    }))
+
                 };
                 const response = await axios.post(
                     `http://localhost:8080/Administators/createMemberByAdministrator/${ID}`,
                     { ...preparedData }
                 );
                 const newId = response.data._id;
-                
+
                 dispatch(Create_Member({
                     _id: newId,
                     name: preparedData.name,

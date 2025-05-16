@@ -10,6 +10,7 @@ import SideBar from './Components/SideBar';
 import GetSecurity from './Components/GetSecurity';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
 import ControlPanel from './Components/ControlPanel/ControlPanel';
+import CreatNewMember from './Components/AddMembers/CreatNewMember';
 
 // const LazyNavBar = React.lazy(() => import('./Components/NavBar'));
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
@@ -21,8 +22,17 @@ const LazyTable = React.lazy(() => import('./Components/TableMembers/Table'));
 const LazyControlPanel = React.lazy(() => import('./Components/ControlPanel/ControlPanel'));
 
 function LayoutWithSidebar({ children }) {
-  return <><SideBar />{children}</>;
+  return (
+    <div style={{ display: 'flex' }}>
+      <SideBar />
+      <div style={{ flex: 1, padding: '1rem 1rem 1rem 260px' }}>
+        {children}
+      </div>
+    </div>
+  );
 }
+
+
 
 function AppContent() {
   const location = useLocation();

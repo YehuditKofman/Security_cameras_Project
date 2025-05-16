@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Flex, Select } from 'antd';
+import ALL_PERMISSIONS from '../AddMembers/AllPermissions'; // התאימי את הנתיב לפי הצורך
 import { useState } from 'react';
 import {
     Button,
@@ -88,8 +89,8 @@ const CreatNewMember = () => {
                 console.log(allValues);
             }}
         >
-            
-            <Form.Item label="Full Name" name="Name" rules={[{required: true, message: 'Please input firstName and lastName!' }]}>
+
+            <Form.Item label="Full Name" name="Name" rules={[{ required: true, message: 'Please input firstName and lastName!' }]}>
                 <Input />
             </Form.Item>
 
@@ -163,11 +164,10 @@ const CreatNewMember = () => {
                     placeholder="Select Access"
                     variant="underlined"
                     style={{ flex: 1 }}
-                    options={[
-                        { value: 'jack', label: 'Jack' },
-                        { value: 'lucy', label: 'Lucy' },
-                        { value: 'Yiminghe', label: 'Yiminghe' },
-                    ]}
+                    options={ALL_PERMISSIONS.map(permission => ({
+                        value: permission,
+                        label: permission,
+                    }))}
                 />
 
             </Form.Item>
@@ -178,7 +178,7 @@ const CreatNewMember = () => {
                 <Button type="primary" htmlType="submit" onClick={() => { setFlag(true); }}>
                     Create New Member
                 </Button>
-                    
+
             </Form.Item>
             {flag && <AxiosCreteMemberByAdministrator ID={ID} memberData={formData} />}
 
