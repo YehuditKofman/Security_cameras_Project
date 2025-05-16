@@ -7,16 +7,14 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
 import SideBar from './Components/SideBar';
-import GetSecurity from './Components/GetSecurity';
-import UploadVideo from './Components/UploadVideo/UploadVidea';
-import ControlPanel from './Components/ControlPanel/ControlPanel';
+// import GetSecurity from './Components/GetSecurity'; // לא בשימוש
+// import ControlPanel from './Components/ControlPanel/ControlPanel'; // לא בשימוש
 import CreatNewMember from './Components/AddMembers/CreatNewMember';
 
-// const LazyNavBar = React.lazy(() => import('./Components/NavBar'));
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
-const LazySighIn = React.lazy(() => import('./Components/SighInAdministrator'));
+const LazySignIn = React.lazy(() => import('./Components/SighInAdministrator'));
 const LazyHome = React.lazy(() => import('./Components/Home'));
-const LasyPersonalArea = React.lazy(() => import('./Components/PersonalArea'));
+const LazyPersonalArea = React.lazy(() => import('./Components/PersonalArea'));
 const LazyGetSecurity = React.lazy(() => import('./Components/GetSecurity'));
 const LazyTable = React.lazy(() => import('./Components/TableMembers/Table'));
 const LazyControlPanel = React.lazy(() => import('./Components/ControlPanel/ControlPanel'));
@@ -25,47 +23,35 @@ function LayoutWithSidebar({ children }) {
   return (
     <div style={{ display: 'flex' }}>
       <SideBar />
-      <div style={{ flex: 1, padding: '1rem 1rem 1rem 260px' }}>
+      <div style={{ flex: 1, padding: '0.5rem 0.5rem 0.5rem 0.5px' }}>
         {children}
       </div>
     </div>
   );
 }
 
-
-
 function AppContent() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
 
   return (
-    <>
-
-      {/* <Suspense fallback={'loading...'}><LazyNavBar /></Suspense> */}
-      <Routes>
-        <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
-        <Route path="/Sigh-In" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazySighIn /></Suspense></LayoutWithSidebar>} />
-        <Route path="/Login" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyLogin /></Suspense></LayoutWithSidebar>} />
-        <Route path="/Login/PersonalArea" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LasyPersonalArea /></Suspense></LayoutWithSidebar>} />
-        <Route path="/GetSecurity" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyGetSecurity /></Suspense></LayoutWithSidebar>} />
-        <Route path="/Table" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyTable /></Suspense></LayoutWithSidebar>} />
-        <Route path="/ControlPanel" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyControlPanel /></Suspense></LayoutWithSidebar>} />
-        {/* <Route path="/recordings" element={<Recordings />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/storage" element={<Storage />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/login" element={<Login />} /> */}
-      
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
+      <Route path="/Sign-In" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazySignIn /></Suspense></LayoutWithSidebar>} />
+      <Route path="/Login" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyLogin /></Suspense></LayoutWithSidebar>} />
+      <Route path="/Login/PersonalArea" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyPersonalArea /></Suspense></LayoutWithSidebar>} />
+      <Route path="/GetSecurity" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyGetSecurity /></Suspense></LayoutWithSidebar>} />
+      <Route path="/Table" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyTable /></Suspense></LayoutWithSidebar>} />
+      <Route path="/ControlPanel" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyControlPanel /></Suspense></LayoutWithSidebar>} />
+    </Routes>
   );
 }
 
 function App() {
-  return <BrowserRouter>
-    <AppContent />
-
-  </BrowserRouter>;
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
 }
 
 export default App;
