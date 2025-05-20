@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PeopleChart from "./Try"; // קומפוננטת הגרף הקיימת שלך
-import { useLocation } from "react-router-dom";
 
-const Dashboard=(propst)=> {
-    const location = useLocation();
-  const { showChart, recordingName } = location.state || {};
+const Anyles=()=> {
+ 
 
   return (
     <div style={{ padding: "1rem", maxWidth: "900px", margin: "0 auto", direction: "rtl" }}>
@@ -18,7 +16,7 @@ const Dashboard=(propst)=> {
           marginBottom: "1.5rem",
         }}
       >
-        <PeopleChart />
+        {/* <PeopleChart/> */}
       </div>
 
       {/* כרטיס 2 - דמוגרפיה + וידאו */}
@@ -56,4 +54,4 @@ const Dashboard=(propst)=> {
     </div>
   );
 }
-export default Dashboard;
+export default Anyles;

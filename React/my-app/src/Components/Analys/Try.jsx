@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import {
   ResponsiveContainer,
   AreaChart,
@@ -12,26 +14,41 @@ import {
 export default function PeopleChart() {
   const [Data, setData] = useState([]);
   const [error, setError] = useState(null);
+     const location = useLocation();
+    const { showChart, recordingName } = location.state || {};
 
-  useEffect(() => { 
-    console.log("מתחיל למשוך נתונים מהשרת...");
 
-    fetch("http://localhost:5000/people-per-minute")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`שגיאה מהשרת: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log("✅ נתונים שהתקבלו מהשרת:", data);
-        setData(data);
-      })
-      .catch(err => {
-        console.error("❌ שגיאה בעת בקשת הנתונים:", err);
-        setError(err.message);
-      });
-  }, []);
+  console.log("🎯 recordingName השתנה:", recordingName);
+
+
+  useEffect(() => {
+  if (!recordingName) return;
+
+  console.log("📤 שולח את שם ההקלטה לשרת:", recordingName);
+
+  fetch("http://localhost:5000/people-per-minute", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ recordingName }) 
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`שגיאה מהשרת: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("✅ קיבלנו את הנתונים:", data);
+      setData(data);
+    })
+    .catch((err) => {
+      console.error("❌ שגיאה בעת שליחת הבקשה:", err);
+      setError(err.message);
+    });
+}, [recordingName]);
+
 
   return (
     <div style={{ width: "100%", height: 400, padding: "1rem", direction: "rtl" }}>
