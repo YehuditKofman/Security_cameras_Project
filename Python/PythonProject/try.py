@@ -3,9 +3,10 @@ import time
 from tqdm import tqdm
 from collections import defaultdict
 from datetime import timedelta
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from ultralytics import YOLO
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +34,7 @@ def analyze_video(video_path):
             break
 
         frame_count += 1
-        interval = 5  # זמן חלוקה ב-5 שניות
+        interval = 5  # חלוקה כל 5 שניות
         segment = int(frame_count / (fps * interval))
 
         results = model.predict(frame, verbose=False)[0]
@@ -62,19 +63,25 @@ def analyze_video(video_path):
 
     return final_data
 
-video_data = []
-
 @app.route("/")
 def home():
-    return "Server is running. Use /people-per-minute to get data."
+    return "Server is running. Use /people-per-minute to post video name."
 
-@app.route("/people-per-minute")
+@app.route("/people-per-minute", methods=["POST"])
 def get_people_data():
-    return jsonify(video_data)
+    data = request.get_json()
+    if not data or "recordingName" not in data:
+        return "Missing recordingName", 400
+
+    recording_name = data["recordingName"]
+    video_path = os.path.join("videos", recording_name)
+
+    if not os.path.exists(video_path):
+        return f"Video file {recording_name} not found", 404
+
+    result = analyze_video(video_path)
+    return jsonify(result)
 
 if __name__ == "__main__":
-    video_path = "vidio.mp4"  # ודא שהקובץ נמצא באותה תיקייה
-    print("⏳ Starting video analysis...")
-    video_data = analyze_video(video_path)
     print("🚀 Starting Flask server...")
-    app.run(host="localhost", port=5000, debug=False)
+    app.run(debug=False)
