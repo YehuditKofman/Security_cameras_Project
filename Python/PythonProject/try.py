@@ -77,4 +77,4 @@ if __name__ == "__main__":
     print("⏳ Starting video analysis...")
     video_data = analyze_video(video_path)
     print("🚀 Starting Flask server...")
-    app.run(debug=False)
+    app.run(host="localhost", port=5000, debug=False)

@@ -1,29 +1,33 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config(); // כדי להשתמש בקובץ .env (אם תבחר)
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS 
-  }
-});
+const nodemailer = require("nodemailer");
 
-async function sendEmail(to, subject, text) {
-  const mailOptions = {
-    from: process.env.EMAIL_USER ,
-    to,
-    subject,
-    text
-  };
+async function sendEmails(to, subject, text) {
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: subject,
+        text: text
+    };
 
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
-  } catch (error) {
-    console.error('Error sending email:', error);
-    throw error;
-  }
+    try {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        console.log("Sending email to:", to); // לוג של הכתובת שאליה נשלח המייל
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully:", info.response); // לוג של התגובה מהשרת
+    } catch (error) {
+        console.error("Error sending email:", error.message); // לוג של שגיאה
+    }
 }
 
-module.exports = { sendEmail };
+// דוגמה לקריאה לפונקציה
+
+module.exports = {
+    sendEmails: sendEmails // שנה ל sendEmails
+};

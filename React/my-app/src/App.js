@@ -10,10 +10,10 @@ import SideBar from './Components/SideBar';
 // import GetSecurity from './Components/GetSecurity'; // לא בשימוש
 // import ControlPanel from './Components/ControlPanel/ControlPanel'; // לא בשימוש
 import CreatNewMember from './Components/AddMembers/CreatNewMember';
-import PeopleChart from './Components/ControlPanel/Try';
-import PeopleChart from './Components/Analys/Try';
+import PeopleChart from './Components/ControlPanel/Try'
 import Dashboard from './Components/Analys/Anyles';
 import UploadVideo from './Components/UploadVideo/UploadVidea';
+import SighInAdministrator from './Components/SighInAdministrator';
 
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
 const LazySignIn = React.lazy(() => import('./Components/SighInAdministrator'));
@@ -53,13 +53,12 @@ function AppContent() {
     </Routes>
   );
 }
-
+  
 function App() {
   return (
     <BrowserRouter>
-      <AppContent /> 
-      <PeopleChart/>;
-  
+      <AppContent />
+      <SighInAdministrator />
     </BrowserRouter>
   );
 }

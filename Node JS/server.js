@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 const app = express(); // אתחול המשתנה app
 app.use(express.json()); // חובה כדי לפרסר JSON
 app.use(cors());
-    
+const { sendEmails } = require('./Middleware/email'); // עדכן את הנתיב לקובץ שלך
+
 
 
 
@@ -26,7 +27,24 @@ app.use("/Administators", Administators);
 app.use("/Members", Members);
 app.use("/SecurityCameras", SecurityCameras);
 
+app.post('/send-email', async (req, res) => {
+    const { to, subject, text } = req.body;
+    console.log("Received data:", req.body);
+    try {
+        await sendEmails(to, subject, text);  // קריאה לפונקציה לשליחת המייל
+        console.log("Received data:", req.body); // הוסף לוג כאן
+        res.status(200).send('Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 
 app.listen(8080, () => {
     console.log("server is run...");
 });
+
+
