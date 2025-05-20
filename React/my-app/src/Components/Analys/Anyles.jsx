@@ -1,7 +1,11 @@
 import React from "react";
 import PeopleChart from "./Try"; // קומפוננטת הגרף הקיימת שלך
+import { useLocation } from "react-router-dom";
 
 const Dashboard=(propst)=> {
+    const location = useLocation();
+  const { showChart, recordingName } = location.state || {};
+
   return (
     <div style={{ padding: "1rem", maxWidth: "900px", margin: "0 auto", direction: "rtl" }}>
       {/* כרטיס 1 - הגרף */}
