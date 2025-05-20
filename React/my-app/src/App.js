@@ -11,6 +11,9 @@ import SideBar from './Components/SideBar';
 // import ControlPanel from './Components/ControlPanel/ControlPanel'; // לא בשימוש
 import CreatNewMember from './Components/AddMembers/CreatNewMember';
 import PeopleChart from './Components/ControlPanel/Try';
+import PeopleChart from './Components/Analys/Try';
+import Dashboard from './Components/Analys/Anyles';
+import UploadVideo from './Components/UploadVideo/UploadVidea';
 
 const LazyLogin = React.lazy(() => import('./Components/Login/Login'));
 const LazySignIn = React.lazy(() => import('./Components/SighInAdministrator'));
@@ -19,6 +22,8 @@ const LazyPersonalArea = React.lazy(() => import('./Components/PersonalArea'));
 const LazyGetSecurity = React.lazy(() => import('./Components/GetSecurity'));
 const LazyTable = React.lazy(() => import('./Components/TableMembers/Table'));
 const LazyControlPanel = React.lazy(() => import('./Components/ControlPanel/ControlPanel'));
+const LazyDashboard = React.lazy(() => import('./Components/Analys/Try'));
+
 
 function LayoutWithSidebar({ children }) {
   return (
@@ -43,6 +48,8 @@ function AppContent() {
       <Route path="/GetSecurity" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyGetSecurity /></Suspense></LayoutWithSidebar>} />
       <Route path="/Table" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyTable /></Suspense></LayoutWithSidebar>} />
       <Route path="/ControlPanel" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyControlPanel /></Suspense></LayoutWithSidebar>} />
+      <Route path="/analysis" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyDashboard /></Suspense></LayoutWithSidebar>} />
+
     </Routes>
   );
 }
