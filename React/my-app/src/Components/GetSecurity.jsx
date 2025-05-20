@@ -43,14 +43,13 @@ const GetSecurity = () => {
     const [playing, setPlaying] = useState(false);
     const videoRef = useRef(null);
     const menu = useRef(null);
+    console.log(video.fileName);
     const videoUrl = `http://localhost:8080/videos/${video.fileName}`;
-
     const togglePlay = () => {
       if (!videoRef.current) return;
       playing ? videoRef.current.pause() : videoRef.current.play();
       setPlaying(!playing);
     };
-
 
     const formattedDate = new Date(video.date).toLocaleDateString('he-IL');
     const formattedTime = new Date(video.date).toLocaleTimeString('he-IL');
@@ -110,7 +109,7 @@ const GetSecurity = () => {
                 to={{
                   pathname: "/analysis",
                 }}
-                state={{ showChart: true, recordingName: recordingName }}
+                state={{ showChart: true, recordingName: video.fileName }}
               >
                 <Button
                   label="לצפיה בסכמה"
