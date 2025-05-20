@@ -14,6 +14,7 @@ const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showChart, setShowChart] = useState(false);
+  const [recordingName,setRecordingName]=useState("");
   const admin = useSelector((state) => state.AdministratorSlice);
 
   useEffect(() => {
