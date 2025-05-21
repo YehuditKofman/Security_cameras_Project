@@ -9,14 +9,15 @@ import {
   Tooltip,
   Area,
 } from "recharts";
-import html2canvas from "html2canvas"; // ← ייבוא הספרייה
+import html2canvas from "html2canvas";
 import SaveAnalysis from "./SaveAnalysis";
+import VideoPlayerInAnyleys from "./VideoPlayerInAnyleys";
 
 export default function PeopleChart() {
   const [Data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [isFromMongo, setIsFromMongo] = useState(false);
-  const chartRef = useRef(null); // ← רפרנס לגרף
+  const chartRef = useRef(null);
   const location = useLocation();
   const { showChart, recordingName, ID_video, peopleData } = location.state || {};
   const videoUrl = `http://localhost:8080/videos/${recordingName}`;
@@ -48,7 +49,6 @@ export default function PeopleChart() {
       });
   }, [recordingName, peopleData]);
 
-  // פונקציה לשמירת הגרף
   const handleDownload = async () => {
     if (!chartRef.current) return;
     const canvas = await html2canvas(chartRef.current);
@@ -59,7 +59,7 @@ export default function PeopleChart() {
   };
 
   return (
-    <div style={{ width: "100%", height: 450, padding: "1rem", direction: "rtl" }}>
+    <div style={{ width: "100%", padding: "1rem", direction: "rtl" }}>
       <h2 style={{ textAlign: "right", marginBottom: "1rem" }}>מבקרים לאורך היום</h2>
 
       {error && <p style={{ color: "red" }}>שגיאה: {error}</p>}
@@ -67,54 +67,61 @@ export default function PeopleChart() {
       {Data.length === 0 ? (
         <p>⏳ טוען נתונים...</p>
       ) : (
-        <div ref={chartRef} style={{ width: "100%", height: 400 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={Data}>
-              <defs>
-                <linearGradient id="colorPeople" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3f80ff" stopOpacity={0.4} />
-                  <stop offset="100%" stopColor="#3f80ff" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="people"
-                stroke="#3f80ff"
-                fillOpacity={1}
-                fill="url(#colorPeople)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-
+        <div
+          style={{
+            backgroundColor: "#fff",
+            border: "1px solid #e0e0e0",
+            borderRadius: "12px",
+            padding: "1rem",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            marginBottom: "1rem"
+          }}
+          ref={chartRef}
+        >
+          <div style={{ width: "100%", height: 350 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={Data}>
+                <defs>
+                  <linearGradient id="colorPeople" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3f80ff" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#3f80ff" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="hour" />
+                <YAxis />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="people"
+                  stroke="#3f80ff"
+                  fillOpacity={1}
+                  fill="url(#colorPeople)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-
       )}
 
       {Data.length > 0 && (
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
-          <button onClick={handleDownload} style={{
-            padding: "0.5rem 1rem",
-            backgroundColor: "#3f80ff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer"
-          }}>
+          <button
+            onClick={handleDownload}
+            style={{
+              padding: "0.5rem 1rem",
+              backgroundColor: "#3f80ff",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer"
+            }}
+          >
             שמור גרף כתמונה
           </button>
-          <video width="100%" height="300" controls style={{ marginTop: "1rem", borderRadius: "8px" }}>
-            <source src={videoUrl} type="video/mp4" />
-            הדפדפן שלך לא תומך בהצגת וידאו.
-          </video>
-
+          <VideoPlayerInAnyleys videoUrl={videoUrl} /> {/* שימוש בקומפוננטה */}
         </div>
       )}
-
-
 
       {Data.length > 0 && ID_video && !isFromMongo && (
         <SaveAnalysis ID_video={ID_video} data={Data} />
