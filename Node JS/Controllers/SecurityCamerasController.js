@@ -57,4 +57,28 @@ async function getPeopleAnalysis(req, res) {
     res.status(500).send("שגיאה בקבלת הנתונים.");
   }
 }
-module.exports = {createSecurityCameras,addPeopleAnalysis,getPeopleAnalysis}
+
+async function deleteSecurityCamera(req, res) {
+    try {
+        const { id } = req.params;
+
+        // בדיקה אם ObjectId חוקי
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send("Invalid ID format.");
+        }
+
+        const deletedCamera = await securityCameras.findByIdAndDelete(id);
+
+        if (!deletedCamera) {
+            return res.status(404).send("Security camera not found.");
+        }
+
+        res.status(200).json({ message: "Security camera deleted successfully.", deletedCamera });
+    } catch (error) {
+        console.error("Error deleting security camera:", error);
+        res.status(500).send("Failed to delete security camera.");
+    }
+}
+
+
+module.exports = {createSecurityCameras,addPeopleAnalysis,getPeopleAnalysis,deleteSecurityCamera}
