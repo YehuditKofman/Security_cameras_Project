@@ -10,8 +10,6 @@ app.use(cors());
 const { sendEmails } = require('./Middleware/email'); // עדכן את הנתיב לקובץ שלך
 
 
-
-
 const DBpass = process.env.MONGO_PASS;
 mongoose.connect(DBpass)
     .then(() => console.log("Connected…"))
