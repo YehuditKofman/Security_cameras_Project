@@ -160,18 +160,6 @@ const Anyles=()=> {
           <div><strong>התפלגות מגדרית</strong></div>
         </div>
 
-        {/* סרטון */}
-        <video
-          controls
-          style={{
-            width: "100%",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-          }}
-        >
-          <source src="/demo-video.mp4" type="video/mp4" />
-          הדפדפן שלך לא תומך בצפייה בסרטונים.
-        </video>
       </div>
     </div>
   );
