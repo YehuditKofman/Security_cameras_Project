@@ -86,6 +86,8 @@ from datetime import timedelta
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from ultralytics import YOLO
+from pathlib import Path
+
 import os
 
 app = Flask(__name__)
@@ -154,8 +156,8 @@ def get_people_data():
         return "Missing recordingName", 400
 
     recording_name = data["recordingName"]
-    video_path = os.path.join("videos", recording_name)
-
+    video_path = os.path.join(r'../../Node JS/uploads/', recording_name)
+    print(video_path)
     if not os.path.exists(video_path):
         return f"Video file {recording_name} not found", 404
 
