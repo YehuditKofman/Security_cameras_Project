@@ -40,5 +40,21 @@ async function addPeopleAnalysis(req, res) {
   }
 }
 
+// פונקציה שמחזירה את מערך peoplePerMinute עבור מזהה סרטה
+async function getPeopleAnalysis(req, res) {
+  try {
+    const { id } = req.params; // קבלת מזהה ההסרטה מה-URL
 
-module.exports = {createSecurityCameras,addPeopleAnalysis}
+    const recording = await securityCameras.findById(id).select("peoplePerMinute");
+
+    if (!recording) {
+      return res.status(404).json({ error: "הסרטה לא נמצאה" });
+    }
+
+    res.status(200).json({ peoplePerMinute: recording.peoplePerMinute || [] });
+  } catch (error) {
+    console.error("שגיאה בקבלת נתוני הניתוח של ההסרטה:", error);
+    res.status(500).send("שגיאה בקבלת הנתונים.");
+  }
+}
+module.exports = {createSecurityCameras,addPeopleAnalysis,getPeopleAnalysis}

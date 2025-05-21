@@ -1,4 +1,6 @@
 
+
+
 // import { Card } from 'primereact/card';
 // import { Button } from 'primereact/button';
 // import { Menu } from 'primereact/menu';
@@ -9,12 +11,13 @@
 // import UploadVideo from './UploadVideo/UploadVidea';
 // import Dashboard from './Analys/Anyles';
 // import { Link } from 'react-router-dom';
+// import AxiosPeoplePerMinute from './Analys/AxiosPeoplePerMinute';
 
 // const GetSecurity = () => {
 //   const [videos, setVideos] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [showChart, setShowChart] = useState(false);
-//   const [recordingName,setRecordingName]=useState("");
+//   const [recordingName, setRecordingName] = useState("");
 //   const admin = useSelector((state) => state.AdministratorSlice);
 
 //   useEffect(() => {
@@ -25,6 +28,7 @@
 //           `http://localhost:8080/Administators/getAllSecurityCamerasByAdministrator/${admin._id}`
 //         );
 //         const videoData = data.map((v) => ({
+//           id: v._id,
 //           filePath: v.filePath,
 //           fileName: v.filePath?.slice(8),
 //           date: v.date,
@@ -43,14 +47,14 @@
 //     const [playing, setPlaying] = useState(false);
 //     const videoRef = useRef(null);
 //     const menu = useRef(null);
+//     console.log(video.fileName);
 //     const videoUrl = `http://localhost:8080/videos/${video.fileName}`;
-
 //     const togglePlay = () => {
 //       if (!videoRef.current) return;
 //       playing ? videoRef.current.pause() : videoRef.current.play();
 //       setPlaying(!playing);
 //     };
-
+//     const { data2, loading } = AxiosPeoplePerMinute(video._id);
 
 //     const formattedDate = new Date(video.date).toLocaleDateString('he-IL');
 //     const formattedTime = new Date(video.date).toLocaleTimeString('he-IL');
@@ -110,8 +114,9 @@
 //                 to={{
 //                   pathname: "/analysis",
 //                 }}
-//                 state={{ showChart: true, recordingName: recordingName }}
+//                 state={{ showChart: true, recordingName: video.fileName, ID_video: video.id }}
 //               >
+
 //                 <Button
 //                   label="לצפיה בסכמה"
 //                   icon="pi pi-chart-bar"
@@ -154,18 +159,18 @@
 // };
 
 // export default GetSecurity;
-
-
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
 import { Badge } from 'primereact/badge';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import UploadVideo from './UploadVideo/UploadVidea';
 import Dashboard from './Analys/Anyles';
 import { Link } from 'react-router-dom';
+import AxiosPeoplePerMinute from './Analys/AxiosPeoplePerMinute';
+import usePeoplePerMinute from './Analys/AxiosPeoplePerMinute'; // ✅ הוספה
 
 const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
@@ -173,6 +178,7 @@ const GetSecurity = () => {
   const [showChart, setShowChart] = useState(false);
   const [recordingName, setRecordingName] = useState("");
   const admin = useSelector((state) => state.AdministratorSlice);
+  const [peopleData, setPeopleData] = useState([]);
 
   useEffect(() => {
     if (!admin._id) return;
@@ -203,11 +209,16 @@ const GetSecurity = () => {
     const menu = useRef(null);
     console.log(video.fileName);
     const videoUrl = `http://localhost:8080/videos/${video.fileName}`;
+    console.log(video.id, "vidio id")
+    const { data: peopleData, loading } = AxiosPeoplePerMinute({ recordingId: video.id });
+    //setPeopleData(peopleData)
+    console.log("peopleData:", peopleData);
     const togglePlay = () => {
       if (!videoRef.current) return;
       playing ? videoRef.current.pause() : videoRef.current.play();
       setPlaying(!playing);
     };
+  
 
     const formattedDate = new Date(video.date).toLocaleDateString('he-IL');
     const formattedTime = new Date(video.date).toLocaleTimeString('he-IL');
@@ -267,15 +278,16 @@ const GetSecurity = () => {
                 to={{
                   pathname: "/analysis",
                 }}
-                state={{ showChart: true, recordingName: video.fileName, ID_video: video.id }}
+                state={{ showChart: true, recordingName: video.fileName, ID_video: video.id, peopleData: peopleData }}
               >
-
                 <Button
                   label="לצפיה בסכמה"
                   icon="pi pi-chart-bar"
                   className="p-button-outlined"
                 />
               </Link>
+
+
             </div>
           </div>
           <Badge value="פעיל" severity="success" style={{ direction: 'rtl' }} />
@@ -288,20 +300,16 @@ const GetSecurity = () => {
 
   return (
     <div className="p-4" style={{ direction: 'rtl' }}>
-      {/* כותרת ופעולות */}
       <div className="flex justify-content-between align-items-center mb-4">
         <div>
           <div style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>מצלמות</div>
           <div style={{ color: '#6b7280' }}>צפייה ישירה וניהול מצלמות</div>
         </div>
         <div className="flex gap-2">
-
           {<UploadVideo />}
         </div>
       </div>
 
-
-      {/* גריד */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
         {videos.map((video) => (
           <VideoCard key={video.fileName} video={video} />

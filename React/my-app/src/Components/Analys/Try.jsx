@@ -1,37 +1,59 @@
+
 // import React, { useState, useEffect } from "react";
+// import { useLocation } from "react-router-dom";
 // import {
 //   ResponsiveContainer,
 //   AreaChart,
 //   CartesianGrid,
 //   XAxis,
 //   YAxis,
-//   Tooltip, 
+//   Tooltip,
 //   Area,
 // } from "recharts";
+// import SaveAnalysis from "./SaveAnalysis";
 
 // export default function PeopleChart() {
 //   const [Data, setData] = useState([]);
 //   const [error, setError] = useState(null);
+//   const location = useLocation();
+//   const { showChart, recordingName, ID_video, peopleData } = location.state || {};
 
-//   useEffect(() => { 
-//     console.log("מתחיל למשוך נתונים מהשרת...");
+//   useEffect(() => {
+//     if (!recordingName) return;
 
-//     fetch("http://localhost:5000/people-per-minute")
-//       .then(res => {
+//     // אם יש נתונים מוכנים - נשתמש בהם
+//     if (peopleData && peopleData.length > 0) {
+//       console.log("📊 משתמשים ב-peopleData שהועבר מהניווט");
+//       setData(peopleData);
+//       return;
+//     }
+
+//     // אם אין נתונים - מבצעים fetch
+//     console.log("📤 שולח את שם ההקלטה לשרת:", recordingName);
+
+//     fetch("http://localhost:5000/people-per-minute", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ recordingName })
+//     })
+//       .then((res) => {
 //         if (!res.ok) {
 //           throw new Error(`שגיאה מהשרת: ${res.status}`);
 //         }
 //         return res.json();
 //       })
-//       .then(data => {
-//         console.log("✅ נתונים שהתקבלו מהשרת:", data);
+//       .then((data) => {
+//         console.log("✅ קיבלנו את הנתונים:", data);
 //         setData(data);
 //       })
-//       .catch(err => {
-//         console.error("❌ שגיאה בעת בקשת הנתונים:", err);
+//       .catch((err) => {
+//         console.error("❌ שגיאה בעת שליחת הבקשה:", err);
 //         setError(err.message);
 //       });
-//   }, []);
+
+//   }, [recordingName, peopleData]);
 
 //   return (
 //     <div style={{ width: "100%", height: 400, padding: "1rem", direction: "rtl" }}>
@@ -70,12 +92,17 @@
 //       <p style={{ textAlign: "center", marginTop: "1rem", color: "#555" }}>
 //         שעות שיא: 12:00–14:00 | ממוצע יומי: 38 מבקרים בשעה
 //       </p>
+
+//       {Data.length > 0 && ID_video && (
+//         <SaveAnalysis ID_video={ID_video} data={Data} />
+//       )}
 //     </div>
 //   );
 // }
+
+
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
 import {
   ResponsiveContainer,
   AreaChart,
@@ -90,16 +117,22 @@ import SaveAnalysis from "./SaveAnalysis";
 export default function PeopleChart() {
   const [Data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const [isFromMongo, setIsFromMongo] = useState(false); // ← דגל חדש
   const location = useLocation();
-  const { showChart, recordingName, ID_video } = location.state || {};
-
-
-  console.log("🎯 recordingName השתנה:", recordingName);
-
+  const { showChart, recordingName, ID_video, peopleData } = location.state || {};
 
   useEffect(() => {
     if (!recordingName) return;
 
+    // אם יש נתונים מוכנים - נשתמש בהם
+    if (peopleData && peopleData.length > 0) {
+      console.log("📊 משתמשים ב-peopleData שהועבר מהניווט");
+      setData(peopleData);
+      setIsFromMongo(true); // ← הנתונים הגיעו ממונגו
+      return;
+    }
+
+    // אם אין נתונים - מבצעים fetch
     console.log("📤 שולח את שם ההקלטה לשרת:", recordingName);
 
     fetch("http://localhost:5000/people-per-minute", {
@@ -118,23 +151,14 @@ export default function PeopleChart() {
       .then((data) => {
         console.log("✅ קיבלנו את הנתונים:", data);
         setData(data);
-
-
-
-
-
+        setIsFromMongo(false); // ← הנתונים הגיעו עכשיו מפייתון, ולכן ניתן לשמור אותם
       })
       .catch((err) => {
         console.error("❌ שגיאה בעת שליחת הבקשה:", err);
         setError(err.message);
       });
 
-
-
-
-
-  }, [recordingName]);
-
+  }, [recordingName, peopleData]);
 
   return (
     <div style={{ width: "100%", height: 400, padding: "1rem", direction: "rtl" }}>
@@ -173,11 +197,11 @@ export default function PeopleChart() {
       <p style={{ textAlign: "center", marginTop: "1rem", color: "#555" }}>
         שעות שיא: 12:00–14:00 | ממוצע יומי: 38 מבקרים בשעה
       </p>
-      {Data.length > 0 && ID_video && (
+
+      {/* שמירה רק אם הנתונים לא הגיעו ממונגו */}
+      {Data.length > 0 && ID_video && !isFromMongo && (
         <SaveAnalysis ID_video={ID_video} data={Data} />
       )}
     </div>
   );
 }
-
-
