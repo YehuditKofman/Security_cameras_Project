@@ -171,7 +171,7 @@ const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showChart, setShowChart] = useState(false);
-  const [recordingName,setRecordingName]=useState("");
+  const [recordingName, setRecordingName] = useState("");
   const admin = useSelector((state) => state.AdministratorSlice);
 
   useEffect(() => {
@@ -182,6 +182,7 @@ const GetSecurity = () => {
           `http://localhost:8080/Administators/getAllSecurityCamerasByAdministrator/${admin._id}`
         );
         const videoData = data.map((v) => ({
+          id: v._id,
           filePath: v.filePath,
           fileName: v.filePath?.slice(8),
           date: v.date,
@@ -266,8 +267,9 @@ const GetSecurity = () => {
                 to={{
                   pathname: "/analysis",
                 }}
-                state={{ showChart: true, recordingName: video.fileName }}
+                state={{ showChart: true, recordingName: video.fileName, ID_video: video.id }}
               >
+
                 <Button
                   label="לצפיה בסכמה"
                   icon="pi pi-chart-bar"

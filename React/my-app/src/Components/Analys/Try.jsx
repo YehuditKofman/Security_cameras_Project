@@ -82,47 +82,58 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip, 
+  Tooltip,
   Area,
 } from "recharts";
+import SaveAnalysis from "./SaveAnalysis";
 
 export default function PeopleChart() {
   const [Data, setData] = useState([]);
   const [error, setError] = useState(null);
-     const location = useLocation();
-    const { showChart, recordingName } = location.state || {};
+  const location = useLocation();
+  const { showChart, recordingName, ID_video } = location.state || {};
 
 
   console.log("🎯 recordingName השתנה:", recordingName);
 
 
   useEffect(() => {
-  if (!recordingName) return;
+    if (!recordingName) return;
 
-  console.log("📤 שולח את שם ההקלטה לשרת:", recordingName);
+    console.log("📤 שולח את שם ההקלטה לשרת:", recordingName);
 
-  fetch("http://localhost:5000/people-per-minute", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ recordingName }) 
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`שגיאה מהשרת: ${res.status}`);
-      }
-      return res.json();
+    fetch("http://localhost:5000/people-per-minute", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ recordingName })
     })
-    .then((data) => {
-      console.log("✅ קיבלנו את הנתונים:", data);
-      setData(data);
-    })
-    .catch((err) => {
-      console.error("❌ שגיאה בעת שליחת הבקשה:", err);
-      setError(err.message);
-    });
-}, [recordingName]);
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`שגיאה מהשרת: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("✅ קיבלנו את הנתונים:", data);
+        setData(data);
+
+
+
+
+
+      })
+      .catch((err) => {
+        console.error("❌ שגיאה בעת שליחת הבקשה:", err);
+        setError(err.message);
+      });
+
+
+
+
+
+  }, [recordingName]);
 
 
   return (
@@ -162,6 +173,9 @@ export default function PeopleChart() {
       <p style={{ textAlign: "center", marginTop: "1rem", color: "#555" }}>
         שעות שיא: 12:00–14:00 | ממוצע יומי: 38 מבקרים בשעה
       </p>
+      {Data.length > 0 && ID_video && (
+        <SaveAnalysis ID_video={ID_video} data={Data} />
+      )}
     </div>
   );
 }
