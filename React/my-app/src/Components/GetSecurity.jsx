@@ -18,7 +18,6 @@ import { Dialog } from 'primereact/dialog';
 
 const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false); // הוסיפי שורה זו
   const [loading, setLoading] = useState(true);
   const [showChart, setShowChart] = useState(false);
   const [recordingName, setRecordingName] = useState("");
@@ -51,6 +50,7 @@ const GetSecurity = () => {
 
   const VideoCard = ({ video }) => {
     const [playing, setPlaying] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false); // הוסיפי שורה זו
     const videoRef = useRef(null);
     const menu = useRef(null);
     const videoUrl = `http://localhost:8080/videos/${video.fileName}`;

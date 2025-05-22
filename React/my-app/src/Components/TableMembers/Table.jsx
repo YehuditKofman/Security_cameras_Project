@@ -20,6 +20,7 @@ import AxiosDeleteMember from '../DeleteMember/AxiosDeleteMember';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import AxiosUpdateMember from '../UpdateMember/AxiosUpdateMember ';
+import CreateNewMember  from '../AddMembers/CreatNewMember';
 const Table = () => {
     let emptyProduct = {
         AccessPermissions: [],
@@ -65,8 +66,10 @@ const Table = () => {
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
+    const [showAddEmployee, setShowAddEmployee] = useState(false);
 
     const openNew = () => {
+        setShowAddEmployee(true);
         setProduct(emptyProduct);
         setSubmitted(false);
         setProductDialog(true);
@@ -320,6 +323,10 @@ const Table = () => {
 
     return (
         <div>
+            {showAddEmployee && ( <CreateNewMember/>)}
+
+
+
             <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
