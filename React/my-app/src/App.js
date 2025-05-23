@@ -5,7 +5,6 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-
 import SideBar from './Components/SideBar';
 // import GetSecurity from './Components/GetSecurity'; // לא בשימוש
 // import ControlPanel from './Components/ControlPanel/ControlPanel'; // לא בשימוש
@@ -35,10 +34,8 @@ function LayoutWithSidebar({ children }) {
     </div>
   );
 }
-
 function AppContent() {
   const location = useLocation();
-
   return (
     <Routes>
       <Route path="/" element={<Suspense fallback={'loading...'}><LazyHome /></Suspense>} />
@@ -49,11 +46,9 @@ function AppContent() {
       <Route path="/Table" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyTable /></Suspense></LayoutWithSidebar>} />
       <Route path="/ControlPanel" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyControlPanel /></Suspense></LayoutWithSidebar>} />
       <Route path="/analysis" element={<LayoutWithSidebar><Suspense fallback={'loading...'}><LazyDashboard /></Suspense></LayoutWithSidebar>} />
-
     </Routes>
   );
 }
-  
 function App() {
   return (
     <BrowserRouter>
@@ -61,5 +56,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

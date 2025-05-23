@@ -1,6 +1,4 @@
-// AxiosAllMembers.jsx
 import axios from "axios";
-
 // קלט מהקומפוננטה - לא משתמשים ב-useSelector כאן
 export async function fetchAllMembers(administratorId) {
     try {
@@ -17,9 +15,4 @@ export async function fetchAllMembers(administratorId) {
         
         return [];
     }
-    
 }
-
-
-
-// קלט מהקומפוננטה - לא משתמשים ב-useSelector כאן

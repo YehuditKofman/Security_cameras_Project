@@ -278,12 +278,7 @@ const Table = () => {
                     <Column selectionMode="multiple" exportable={false}></Column>
                     <Column field="password" header="Password" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
-                    {/* <Column field="image" header="Image" body={imageBodyTemplate}></Column> */}
                     <Column field="email" header="Email" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="administartorID" header="administartorID" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="_id" header="ID" sortable />
-
-
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
 
