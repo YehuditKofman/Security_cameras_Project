@@ -21,6 +21,8 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import AxiosUpdateMember from '../UpdateMember/AxiosUpdateMember ';
 import CreateNewMember from '../AddMembers/CreatNewMember';
+import '../../CSS/Table.css'; 
+
 const Table = () => {
     let emptyProduct = {
         AccessPermissions: [],
@@ -186,14 +188,14 @@ const Table = () => {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button label="New" icon="pi pi-plus" severity="success" onClick={openNew} />
-                <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button label="New" icon="pi pi-plus" severity="success" onClick={openNew} className='btn-ex'/>
+                <Button className="btn-dl" label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length}  />
             </div>
         );
     };
-    const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
-    };
+ const rightToolbarTemplate = () => {
+    return <Button label="Export" icon="pi pi-upload" severity="success" onClick={exportCSV} className='btn-ex' />;
+};
     const imageBodyTemplate = (rowData) => {
         return <img src={`https://primefaces.org/cdn/primereact/images/product/${rowData.image}`} alt={rowData.image} className="shadow-2 border-round" style={{ width: '64px' }} />;
     };
@@ -265,13 +267,12 @@ const Table = () => {
                 onClose={() => setShowAddEmployee(false)}
             />
 
-
-
             <Toast ref={toast} />
             <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                <Toolbar className="mb-4 custom-toolbar" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
-                <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
+                <DataTable  className="custom-dark-table" ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
+                   
                     dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
