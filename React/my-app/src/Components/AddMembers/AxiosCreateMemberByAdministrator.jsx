@@ -10,12 +10,12 @@ const AxiosCreteMemberByAdministrator = ({ ID, memberData }) => {
     useEffect(() => {
         const handleCreateAdmin = async () => {
             try {
-                const { Name, phone, password, email, AccessPermissions } = memberData;
+                const { Name, phone, password, email, AccessPermissions,prefix } = memberData;
 
                 const preparedData = {
 
                     name: Name,
-                    phone: `+${memberData.pre}${phone}`,
+                    phone: `+${memberData.prefix}${phone}`,
                     password,
                     email,
                     AccessPermissions: ALL_PERMISSIONS.map(permission => ({

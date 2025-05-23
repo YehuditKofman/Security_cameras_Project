@@ -45,7 +45,7 @@ export default function PeopleChart() {
   }
 
   console.log("🚀 שולח בקשה לשרת לניתוח וידאו...");
-  // setIsProcessing(true); // הפעלת אנימציה
+  setIsProcessing(true); // הפעלת אנימציה
 
   fetch("http://localhost:5000/people-per-minute", {
     method: "POST",

@@ -9,9 +9,10 @@ import UploadVideo from './UploadVideo/UploadVidea';
 import Dashboard from './Analys/Anyles';
 import { Link } from 'react-router-dom';
 import AxiosPeoplePerMinute from './Analys/AxiosPeoplePerMinute';
-import usePeoplePerMinute from './Analys/AxiosPeoplePerMinute';
-import AxiosDelete from './DeleteVideo/AxiosDelete'; // ✅ חדש
 import VideoProcessingOverlay from './Laoding';
+import AxiosDelete from './DeleteVideo/AxiosDelete'; // ✅ חדש
+import { Dialog } from 'primereact/dialog';
+
 
 const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
@@ -20,6 +21,8 @@ const GetSecurity = () => {
   const [recordingName, setRecordingName] = useState("");
   const admin = useSelector((state) => state.AdministratorSlice);
   const [peopleData, setPeopleData] = useState([]);
+
+
 
   useEffect(() => {
     if (!admin._id) return;
@@ -46,6 +49,8 @@ const GetSecurity = () => {
 
   const VideoCard = ({ video }) => {
     const [playing, setPlaying] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false); // הוסיפי שורה זו
+
     const videoRef = useRef(null);
     const menu = useRef(null);
     const videoUrl = `http://localhost:8080/videos/${video.fileName}`;
@@ -57,9 +62,17 @@ const GetSecurity = () => {
       setPlaying(!playing);
     };
 
-    const handleDelete = () => {
-      AxiosDelete({ recordingId: video.id });
-    };
+
+    const handleDelete = async () => {
+      await AxiosDelete({
+        recordingId: video.id, // חשוב להשתמש ב־_id של MongoDB
+        onDeleteSuccess: () => {
+          setVideos((prev) => prev.filter((v) => v.id !== video.id));
+        }
+      });
+
+      setShowDeleteDialog(false)
+    } // סגור את הדיאלוג אחרי מחיקה
 
     const formattedDate = new Date(video.date).toLocaleDateString('he-IL');
     const formattedTime = new Date(video.date).toLocaleTimeString('he-IL');
@@ -87,8 +100,24 @@ const GetSecurity = () => {
             zIndex: 2,
             color: 'white',
           }}
-          onClick={handleDelete}
+        onClick={() => setShowDeleteDialog(true)} // פותח את הדיאלוג
         />
+        <Dialog
+          visible={showDeleteDialog}
+          style={{ width: '350px' }}
+          header="אישור מחיקה"
+          modal
+          className="p-fluid"
+          onHide={() => setShowDeleteDialog(false)}
+          footer={
+            <div>
+              <Button label="לא" icon="pi pi-times" onClick={() => setShowDeleteDialog(false)} className="p-button-text" />
+              <Button label="כן, מחק" icon="pi pi-check" onClick={handleDelete} className="p-button-danger" />
+            </div>
+          }
+        >
+          <span>האם את/ה בטוח/ה שברצונך למחוק את הסרטון?</span>
+        </Dialog>
 
         <div
           style={{
@@ -157,8 +186,8 @@ const GetSecurity = () => {
     <div className="p-4" style={{ direction: 'rtl' }}>
       <div className="flex justify-content-between align-items-center mb-4">
         <div>
-          <div style={{color:' #ffffff', fontWeight: 'bold', fontSize: '1.5rem' }}>מצלמות</div>
-          <div style={{ color:' #ffffff' }}>צפייה ישירה וניהול מצלמות</div>
+          <div style={{ color: ' #ffffff', fontWeight: 'bold', fontSize: '1.5rem' }}>מצלמות</div>
+          <div style={{ color: ' #ffffff' }}>צפייה ישירה וניהול מצלמות</div>
         </div>
         <div className="flex gap-2">
           {<UploadVideo />}
@@ -183,5 +212,6 @@ const GetSecurity = () => {
 
   );
 };
+
 
 export default GetSecurity;
