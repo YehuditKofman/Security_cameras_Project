@@ -4,17 +4,26 @@ const VideoPlayerInAnyleys = ({ videoUrl }) => {
   return (
     <div
       style={{
-        backgroundColor: "#fff",
-        border: "1px solid #e0e0e0",
-        borderRadius: "12px",
+        backgroundColor: "#383c4d",       // card-bg
+        borderRadius: "5px",
         padding: "1rem",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-        marginTop: "1rem",
-        width: "50%", // ← הוספה: חצי רוחב
-        marginInline: "auto" // מרכז את הווידאו אם רוצים
+        width: "100%",
+        height: "390px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        color: "#ffffff"                  // text-color
       }}
     >
-      <video width="100%" height="300" controls style={{ borderRadius: "8px" }}>
+      <video
+        width="100%"
+        height="300"
+        controls
+        style={{
+          borderRadius: "8px",
+          backgroundColor: "#2b2f3f"     // רקע אחיד אם אין וידאו
+        }}
+      >
         <source src={videoUrl} type="video/mp4" />
         הדפדפן שלך לא תומך בהצגת וידאו.
       </video>

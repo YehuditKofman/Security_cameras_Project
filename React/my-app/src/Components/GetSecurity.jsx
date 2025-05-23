@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import AxiosPeoplePerMinute from './Analys/AxiosPeoplePerMinute';
 import usePeoplePerMinute from './Analys/AxiosPeoplePerMinute';
 import AxiosDelete from './DeleteVideo/AxiosDelete'; // ✅ חדש
+import VideoProcessingOverlay from './Laoding';
 
 const GetSecurity = () => {
   const [videos, setVideos] = useState([]);
@@ -66,14 +67,14 @@ const GetSecurity = () => {
     return (
       <div
         style={{
-          width: '380px', // ✅ גודל קבוע
-          backgroundColor: '#1e293b',
+          width: '380px',
+          backgroundColor: 'var(--card-bg)',
           borderRadius: '3px',
           overflow: 'hidden',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.50)',
+          // boxShadow: '0 0.5px 9px var(--box-shedo-color)',
         }}
       >
         <Button
@@ -105,6 +106,7 @@ const GetSecurity = () => {
           >
             <source src={videoUrl} type="video/mp4" />
           </video>
+
           <Button
             icon={playing ? 'pi pi-pause' : 'pi pi-play'}
             className="p-button-rounded p-button-outlined"
@@ -120,7 +122,7 @@ const GetSecurity = () => {
           />
         </div>
 
-        <div className="p-3" style={{ color: 'white', direction: 'rtl' ,justifyContent: 'center' }}>
+        <div className="p-3" style={{ color: 'white', direction: 'rtl', justifyContent: 'center' }}>
           <div className="flex justify-content-between align-items-center mb-2">
             <div style={{ fontSize: '0.8rem', color: '#ccc' }}>{formattedDate} {formattedTime}</div>
             <div>
@@ -133,11 +135,13 @@ const GetSecurity = () => {
                 <Button
                   className="p-button-sm p-button-text"
                   style={{
-                    color: 'white',
+                    color: '#29cc8b',
                     backgroundColor: 'transparent',
+                    border: '1px solid #29cc8b',
+                    boxShadow: '0 0 8px #29cc8b',
                   }}
                 >
-                  <span className="pi pi-chart-line" style={{ fontSize: '1.3rem' }}></span>
+                  <span className="pi pi-chart-line" style={{ fontSize: '1.8rem', color: 'var(--accent-green)' }}></span>
                 </Button>
               </Link>
             </div>
@@ -153,8 +157,8 @@ const GetSecurity = () => {
     <div className="p-4" style={{ direction: 'rtl' }}>
       <div className="flex justify-content-between align-items-center mb-4">
         <div>
-          <div style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>מצלמות</div>
-          <div style={{ color: '#6b7280' }}>צפייה ישירה וניהול מצלמות</div>
+          <div style={{color:' #ffffff', fontWeight: 'bold', fontSize: '1.5rem' }}>מצלמות</div>
+          <div style={{ color:' #ffffff' }}>צפייה ישירה וניהול מצלמות</div>
         </div>
         <div className="flex gap-2">
           {<UploadVideo />}
@@ -162,18 +166,18 @@ const GetSecurity = () => {
       </div>
 
       {/* ✅ שורת הכרטיסים הרספונסיבית */}
-  <div
-  style={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '1.5rem',
-    justifyContent: 'center', // ✅ זה מה שמרכז
-  }}
->
-  {videos.map((video) => (
-    <VideoCard key={video.fileName} video={video} />
-  ))}
-</div>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1.5rem',
+          justifyContent: 'center', // ✅ זה מה שמרכז
+        }}
+      >
+        {videos.map((video) => (
+          <VideoCard key={video.fileName} video={video} />
+        ))}
+      </div>
     </div>
 
 

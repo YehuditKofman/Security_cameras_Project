@@ -68,20 +68,34 @@ const UploadVideo = () => {
       />
       <label htmlFor="upload-input">
         <Button
+          color='var(--accent-green)'
           label="בחר מצלמה"
           icon="pi pi-upload"
           className="p-button-outlined"
           type="button"
+          style={{
+    borderColor: 'var(--accent-green)',
+    color: 'var(--accent-green)',
+    boxShadow: '0 0 8px #29cc8b',
+
+  }}
           onClick={() => document.getElementById("upload-input").click()}
         />
       </label>
-      <Button
-        label={loading ? 'מעלה...' : 'העלה וידאו'}
-        icon="pi pi-check"
-        className="p-button-primary"
-        type="submit"
-        disabled={loading}
-      />
+   <Button
+  label={loading ? 'מעלה...' : 'העלה וידאו'}
+  icon="pi pi-check"
+  className="p-button"
+  type="submit"
+  disabled={loading}
+  style={{
+    backgroundColor: 'var(--accent-green)',
+    borderColor: 'var(--accent-green)',
+    color: 'var(--card-bg)',
+    boxShadow: '0 0 8px #29cc8b',
+
+  }}
+/>
     </form>
   );
 };

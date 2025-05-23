@@ -7,10 +7,12 @@ const SecurityCamerasModule = mongoose.Schema({
     length: { type: Number },
     filePath: { type: String },
     administartorID:{ type:String },  
+
     peoplePerMinute: [
     {
       hour: String,
       people: Number,
+
     },
   ],
    
