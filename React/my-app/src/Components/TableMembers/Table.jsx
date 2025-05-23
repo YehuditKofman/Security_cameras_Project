@@ -276,8 +276,8 @@ const Table = () => {
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
                     <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="password" header="Password" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
+                    <Column field="phone" header="Phone" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="email" header="Email" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
@@ -337,7 +337,7 @@ const Table = () => {
                     <label htmlFor="phone" className="font-bold">Phone</label>
                     <InputNumber
                         id="phone"
-                        value={product.phone}
+                        value={product.phone || ''}
                         onValueChange={(e) => onInputNumberChange(e, 'phone')}
                         mode="decimal"
                         locale="en-US"
