@@ -1,9 +1,9 @@
 const ALL_PERMISSIONS = [
   'add security',
-  'edit security',
   'delete security',
   'view security',
-  // הוסיפי כאן כל הרשאה חדשה בעתיד
+  'add analyes'
+  //להוספת הרשאה בעתיד
 ];
 
 export default ALL_PERMISSIONS;
