@@ -22,18 +22,13 @@ export default function PeopleChart() {
   const [isFromMongo, setIsFromMongo] = useState(false);
   const chartRef = useRef(null);
   const location = useLocation();
-  const [isProcessing, setIsProcessing] = useState(false); // <--- חדש
+  const [isProcessing, setIsProcessing] = useState(false); 
 
   const { showChart, recordingName, ID_video, peopleData } = location.state || {};
   const videoUrl = `http://localhost:8080/videos/${recordingName}`;
-  console.log("🧠 videoUrl:", videoUrl);
 
   useEffect(() => {
-    console.log("📽️ recordingName:", recordingName);
-    console.log("🧠 peopleData:", peopleData);
-
     if (!recordingName) {
-      console.log("⚠️ אין recordingName, יציאה מוקדמת מה-useEffect");
       return;
     }
 
@@ -77,11 +72,10 @@ export default function PeopleChart() {
 
   return (
     <div style={{ padding: "2rem", direction: "rtl" }}>
-      <h2 style={{ textAlign: "right", marginBottom: "1rem" }}>מבקרים לאורך היום</h2>
+      <h2 style={{ textAlign: "right", marginBottom: "1rem",color:"white"}}>Visitors throughout the day</h2>
 
       {error && <p style={{ color: "red" }}>שגיאה: {error}</p>}
 
-      {/* ✅ תצוגת אנימציה בזמן טעינה */}
       {isProcessing ? (
         <VideoProcessingOverlay />
       ) : Data.length === 0 ? (
@@ -97,7 +91,6 @@ export default function PeopleChart() {
               padding: "1rem",
               marginBottom: "2rem",
               boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-              // border: "1px solid #e0e0e0",
               width: "100%",
               maxHeight: 400,
             }}
@@ -131,7 +124,6 @@ export default function PeopleChart() {
 
 
           </div>
-
 
           <div
             style={{

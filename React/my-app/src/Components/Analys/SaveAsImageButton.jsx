@@ -52,7 +52,7 @@ export default function SaveAsImageButton({ targetRef, fileName = "graph.png" })
       }}
     >
       <i className="pi pi-download" style={{ fontSize: "1.2rem" }} />
-      שמור גרף כתמונה
+     Save graph as image
     </button>
   );
 }

@@ -17,8 +17,8 @@ export default function PeoplePieChart({ data }) {
   const activeCount = data.length - emptyCount;
 
   const chartData = [
-    { name: "שעות ריקות", value: emptyCount },
-    { name: "שעות פעילות", value: activeCount }
+    { name: "Empty ", value: emptyCount },
+    { name: "Acctive", value: activeCount }
   ];
 
   const totalPeople = data.reduce((sum, entry) => sum + entry.people, 0);
@@ -37,9 +37,9 @@ export default function PeoplePieChart({ data }) {
         justifyContent: "space-between"
       }}
     >
-      <h3 style={{ fontSize: "1.25rem", color: "#ffffff", marginBottom: "1rem" }}>
-        שעות פעילות לעומת ריקות
-      </h3>
+      <h3 style={{ fontSize: "1.25rem", color: "#ffffff", marginBottom: "1rem",direction:'ltr' }}>
+        Hours of operation versus idle hours     
+         </h3>
 
       <div style={{ width: "100%", height: 280 }}>
         <ResponsiveContainer>
@@ -93,7 +93,7 @@ export default function PeoplePieChart({ data }) {
           textAlign: "center"
         }}
       >
-        ממוצע מבקרים לדקה: <strong>{averagePeople}</strong>
+        Average visitors: <strong>{averagePeople}</strong>
       </div>
     </div>
   );
