@@ -8,7 +8,6 @@ const AxiosPeoplePerMinute = ({recordingId}) => {
 
   useEffect(() => {
     if (!recordingId) return;
-    console.log("recording id",recordingId)    
     const fetchData = async () => {
     
       try {
@@ -18,7 +17,6 @@ const AxiosPeoplePerMinute = ({recordingId}) => {
 
         setData(res.data.peoplePerMinute || []);
       } catch (error) {
-        console.error("שגיאה בקבלת הנתונים:", error);
         setData([]);
       } finally {
         setLoading(false);

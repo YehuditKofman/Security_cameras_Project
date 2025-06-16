@@ -33,15 +33,11 @@ const AxiosCreteMemberByAdministrator = ({ ID, memberData }) => {
 
                 dispatch(Create_Member({
                     _id: newId,
-                    name: preparedData.name,
-                    //phone: preparedData.phone,
-                    //password: preparedData.password,
+                    name: preparedData.name,  
                     email: preparedData.email,
                     role: "Member",
-                    //AccessPermissions: preparedData.AccessPermissions, 
-                    //administartorID: ID
+                
                 }));
-                //console.log('Administrator created successfully!', response.data.token);
                 alert('Member created successfully!', response.data);
 
             } catch (error) {

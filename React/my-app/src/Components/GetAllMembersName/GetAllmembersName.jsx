@@ -10,7 +10,6 @@ const GetAllMembersName = () => {
   if (loading) {
     return <Spin tip="Loading members..." />;
   }
-
   if (error) {
     return <Alert message="Error" description={error} type="error" showIcon />;
   }

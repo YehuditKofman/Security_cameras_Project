@@ -4,7 +4,7 @@ const VideoPlayerInAnyleys = ({ videoUrl }) => {
   return (
     <div
       style={{
-        backgroundColor: "#383c4d",       // card-bg
+        backgroundColor: "#383c4d",     
         borderRadius: "5px",
         padding: "1rem",
         width: "100%",
@@ -12,7 +12,7 @@ const VideoPlayerInAnyleys = ({ videoUrl }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        color: "#ffffff"                  // text-color
+        color: "#ffffff"                
       }}
     >
       <video
@@ -21,7 +21,7 @@ const VideoPlayerInAnyleys = ({ videoUrl }) => {
         controls
         style={{
           borderRadius: "8px",
-          backgroundColor: "#2b2f3f"     // רקע אחיד אם אין וידאו
+          backgroundColor: "#2b2f3f"    
         }}
       >
         <source src={videoUrl} type="video/mp4" />
